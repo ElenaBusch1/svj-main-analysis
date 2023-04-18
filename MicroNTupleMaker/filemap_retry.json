@@ -1,0 +1,8 @@
+[{"inDS":"user.rgarg:user.rgarg.515488.MGPy8EG_SVJSChan2j_1000_4.v7a.mc20d_retry_tree.root", "outDS":"user.kipark.515488.mc20d.v7p1"},
+{"inDS":"user.rgarg:user.rgarg.515517.MGPy8EG_SVJSChan2j_4000_6.v7a.mc20d_retry_tree.root", "outDS":"user.kipark.515517.mc20d.v7p1"},
+{"inDS":"user.rgarg:user.rgarg.515522.MGPy8EG_SVJSChan2j_5000_8.v7a.mc20d_retry_tree.root", "outDS":"user.kipark.515522.mc20d.v7p1"}, 
+{"inDS":"user.rgarg:user.rgarg.515520.MGPy8EG_SVJSChan2j_5000_4.v7a.mc20e_retry_tree.root", "outDS":"user.kipark.515520.mc20e.v7p1"}
+{"inDS":"user.rgarg:user.rgarg.364700.Pythia8EvtGen_A14NNPDF23LO_jetjet_JZ0WithSW.v7a.mc20a_tree.root", "outDS":"user.kipark.364700.mc20a.v7p1"},
+{"inDS":"user.rgarg:user.rgarg.364701.Pythia8EvtGen_A14NNPDF23LO_jetjet_JZ1WithSW.v7a.mc20a_tree.root", "outDS":"user.kipark.364701.mc20a.v7p1"},
+{"inDS":"user.rgarg:user.rgarg.364700.Pythia8EvtGen_A14NNPDF23LO_jetjet_JZ0WithSW.v7a.mc20e_tree.root", "outDS":"user.kipark.364700.mc20e.v7p1"},
+{"inDS":"user.rgarg:user.rgarg.364701.Pythia8EvtGen_A14NNPDF23LO_jetjet_JZ1WithSW.v7a.mc20e_tree.root", "outDS":"user.kipark.364701.mc20e.v7p1"}]
