@@ -46,16 +46,17 @@ public :
    Int_t dsid_int = 0;
 
    // svj & asvj variables
+   bool useJ1J3;
    float weight_scale, sumw;
    int n_svj, n_asvj;
    float dphi_min, dphi_max, maxphi_minphi;
    float dphi_MET_j1j2;
    float pt_balance_12;
-   float mjj_12, mT_jj;
+   float mjj_12, mT_jj, mT_12;
    float mT_jj_neg, met_jj_neg;
    //float mJJ_12, mT_JJ;
    float hT, dR_12, deta_12, rT;
-   float deltaY_12, dphi_12;
+   float deltaY_12, dphi_12, dphi_jj;
    float aplanarity, sphericity, sphericity_T;
 
    //Weight histogram

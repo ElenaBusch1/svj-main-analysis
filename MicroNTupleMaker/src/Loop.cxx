@@ -47,16 +47,40 @@ void MicroNTupleMaker::Loop()
 
                 // check DSID
                 if (dsid_int != mcChannelNumber) cout << "ERROR: Entry 0 DSID " << dsid_int << " does not match event " << mcEventNumber << "(" << jentry << ") DSID" << mcChannelNumber << endl;
+		// check jet angles; take more back to back jets
+		//cout << "checking jet angles" <<endl;
+		//useJ2J3 = false;
+		useJ1J3 = false;
+		TLorentzVector j1, j2, j3;
+		j1.SetPtEtaPhiE(jet_pt->at(0), jet_eta->at(0), jet_phi->at(0), jet_E->at(0));
+		j2.SetPtEtaPhiE(jet_pt->at(1), jet_eta->at(1), jet_phi->at(1), jet_E->at(1));
+		if (jet_pt->size() > 2){
+			j3.SetPtEtaPhiE(jet_pt->at(2), jet_eta->at(2), jet_phi->at(2), jet_E->at(2));
+			float dphi12 = GetDPhi(j1,j2);
+			float dphi23 = GetDPhi(j2,j3);
+			float dphi13 = GetDPhi(j1,j3);
+			//if (dphi23 > dphi12 && dphi23 > dphi13) useJ2J3 = true;
+			if (dphi13 > dphi12 && dphi13 > dphi23) useJ1J3 = true;
+		}
 
 		// create relevant 4 vectors
+		//cout << "setting 4 vectors" <<endl;
 		TLorentzVector v1, v2, met_v;
-
-		v1.SetPtEtaPhiE(jet_pt->at(0), jet_eta->at(0), jet_phi->at(0), jet_E->at(0));
-		v2.SetPtEtaPhiE(jet_pt->at(1), jet_eta->at(1), jet_phi->at(1), jet_E->at(1));
+		//if (useJ2J3){
+		//	v1.SetPtEtaPhiE(jet_pt->at(1), jet_eta->at(1), jet_phi->at(1), jet_E->at(1));
+		//	v2.SetPtEtaPhiE(jet_pt->at(2), jet_eta->at(2), jet_phi->at(2), jet_E->at(2));
+		if (useJ1J3){
+			v1.SetPtEtaPhiE(jet_pt->at(0), jet_eta->at(0), jet_phi->at(0), jet_E->at(0));
+			v2.SetPtEtaPhiE(jet_pt->at(2), jet_eta->at(2), jet_phi->at(2), jet_E->at(2));
+		} else {
+			v1.SetPtEtaPhiE(jet_pt->at(0), jet_eta->at(0), jet_phi->at(0), jet_E->at(0));
+			v2.SetPtEtaPhiE(jet_pt->at(1), jet_eta->at(1), jet_phi->at(1), jet_E->at(1));
+		}
 		//v_svj.SetPtEtaPhiE(jet_pt->at(n_svj), jet_eta->at(n_svj), jet_phi->at(n_svj), jet_E->at(n_svj));
 		//v_asvj.SetPtEtaPhiE(jet_pt->at(n_asvj), jet_eta->at(n_asvj), jet_phi->at(n_asvj), jet_E->at(n_asvj));
 		met_v.SetPtEtaPhiM(metFinalClus,0,metFinalClusPhi,0.0);
 
+		//cout << "calculating variables" <<endl;
 		// y* preselection
 		deltaY_12 = GetDeltaY(v1,v2);
                 float dPhi1 = GetDPhi(v1,met_v);
@@ -69,7 +93,8 @@ void MicroNTupleMaker::Loop()
 		// distance between jets
 		dR_12 = GetdR(v1,v2);
 		deta_12 = GetDEta(v1.Eta(),v2.Eta());
-        	dphi_12 = GetDPhi(v1,v2);
+        	dphi_jj = GetDPhi(v1,v2);
+        	dphi_12 = GetDPhi(j1,j2);
 		//deltaY_sa = GetDeltaY(v_svj,v_asvj);
 		
 	
@@ -87,9 +112,11 @@ void MicroNTupleMaker::Loop()
 		//jet_svj_mT = v_svj.Mt();
 		//jet_asvj_mT = v_asvj.Mt();
                 mT_jj = GetMt(v1,v2,met_v);
+                mT_12 = GetMt(j1,j2,met_v);
 
 		// -j1_pT -j2_pT
-		met_jj_neg = jet_pt->at(0) + jet_pt->at(1);
+		TLorentzVector v1v2 = v1+v2;
+		met_jj_neg = v1v2.Pt();
 		mT_jj_neg = GetMtNeg(v1,v2);
 		dphi_MET_j1j2 = GetDPhiMET(v1,v2,met_v);
 
@@ -147,7 +174,7 @@ void MicroNTupleMaker::Loop()
 		hT = GetHT(jet_pt);
 		
 		// save output tree
-		//cout << "Filling" << endl;
+		//cout << "Filling output" << endl;
 		FillOutputTrees("PostSel");
 		finalEntries++;
 	}
