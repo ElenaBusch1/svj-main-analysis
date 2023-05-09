@@ -97,7 +97,7 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
 	tree_output_vars["eventNumber"] = eventNumber;
 	tree_output_vars["mcEventWeight"] = mcEventWeight;
 	tree_output_vars["weight"] = mcEventWeight*weight_scale;
-	tree_output_vars["SumW"] = sumw;
+	//tree_output_vars["SumW"] = sumw;
 
 	tree_output_vars["n_jets"] = njet;
 	tree_output_vars["jet1_pt"] = jet_pt->at(0); // GeV
@@ -175,6 +175,10 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
 	tree_output[treename]->Fill();
 }
 
+void MicroNTupleMaker::FillSumWBranch(string treename){
+	tree_output_vars["SumW"] = sumw;
+
+}
 
 /* ====================================================================================================================== */
 void MicroNTupleMaker::WriteOutputTrees(){

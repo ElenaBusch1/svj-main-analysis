@@ -20,6 +20,12 @@ void MicroNTupleMaker::DeclareHistograms(TH1F* m, TH1F* c, TH1F* cw){
 }
 
 /* =============================================================================================== */
+void MicroNTupleMaker::AdjustWeightHistogram(int selectedEvents, float selectedEventsSumW){
+  metadata->SetBinContent(2, selectedEvents);
+  metadata->SetBinContent(4, selectedEventsSumW);
+}
+
+/* =============================================================================================== */
 void MicroNTupleMaker::WriteHistograms(){
 
   cout << "Writing Histograms..."<< endl;  

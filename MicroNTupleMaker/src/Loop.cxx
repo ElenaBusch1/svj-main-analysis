@@ -30,6 +30,7 @@ void MicroNTupleMaker::Loop()
 	cout << "Initial events: " << nentries << endl;
 	int finalEntries = 0;
 	int processedEntries = 0;
+        int sumw = 0;
 	Long64_t nbytes = 0, nb = 0;
 	for (Long64_t jentry=0; jentry<nentries;jentry++) {
 		Long64_t ientry = LoadTree(jentry);
@@ -150,6 +151,7 @@ void MicroNTupleMaker::Loop()
 		//cout << "Filling" << endl;
 		FillOutputTrees("PostSel");
 		finalEntries++;
+		sumw += weight;
 	}
 	cout << "Events passing cutflow: " << finalEntries << endl;
 
