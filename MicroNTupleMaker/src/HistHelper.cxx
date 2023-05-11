@@ -8,8 +8,8 @@ void MicroNTupleMaker::DeclareHistograms(TH1F* m, TH1F* c, TH1F* cw){
   cutflow_weighted = (TH1F*) cw->Clone();
 
   // Cutflow histogram
-  cutflow->GetXaxis()->SetBinLabel(15,"j2Width > 0.07");
-  cutflow_weighted->GetXaxis()->SetBinLabel(15,"j2Width > 0.07");
+  //cutflow->GetXaxis()->SetBinLabel(15,"j2Width > 0.07");
+  //cutflow_weighted->GetXaxis()->SetBinLabel(15,"j2Width > 0.07");
 
   // SR temp additions
   //cutflow->GetXaxis()->SetBinLabel(6,"d#eta(j1,j2) < 1.5");
@@ -17,12 +17,6 @@ void MicroNTupleMaker::DeclareHistograms(TH1F* m, TH1F* c, TH1F* cw){
   //cutflow->GetXaxis()->SetBinLabel(8,"mT > 1.5 TeV");
   //cutflow->GetXaxis()->SetBinLabel(8,"d#phi_{min}(j_{1,2},MET) < 0.8");
 
-}
-
-/* =============================================================================================== */
-void MicroNTupleMaker::AdjustWeightHistogram(int selectedEvents, float selectedEventsSumW){
-  metadata->SetBinContent(2, selectedEvents);
-  metadata->SetBinContent(4, selectedEventsSumW);
 }
 
 /* =============================================================================================== */

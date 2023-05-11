@@ -30,7 +30,6 @@ void MicroNTupleMaker::Loop()
 	cout << "Initial events: " << nentries << endl;
 	int finalEntries = 0;
 	int processedEntries = 0;
-        int sumw = 0;
 	Long64_t nbytes = 0, nb = 0;
 	for (Long64_t jentry=0; jentry<nentries;jentry++) {
 		Long64_t ientry = LoadTree(jentry);
@@ -41,11 +40,6 @@ void MicroNTupleMaker::Loop()
 		if (processedEntries % 10000 == 0 && nentries <= 2000000) cout << "Processed " << processedEntries << " events..." << endl;
 		if (processedEntries % 100000 == 0 && nentries > 2000000) cout << "Processed " << processedEntries << " events..." << endl;
 		
-		// preselection
-		if (jet_Width->at(1) < 0.07) continue;
-                cutflow->Fill(15);
-		cutflow_weighted->Fill(15, mcEventWeight*weight_scale);
-
                 // check DSID
                 if (dsid_int != mcChannelNumber) cout << "ERROR: Entry 0 DSID " << dsid_int << " does not match event " << mcEventNumber << "(" << jentry << ") DSID" << mcChannelNumber << endl;
 
@@ -151,7 +145,6 @@ void MicroNTupleMaker::Loop()
 		//cout << "Filling" << endl;
 		FillOutputTrees("PostSel");
 		finalEntries++;
-		sumw += weight;
 	}
 	cout << "Events passing cutflow: " << finalEntries << endl;
 
