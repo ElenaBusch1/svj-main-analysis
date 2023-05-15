@@ -298,6 +298,8 @@ public :
 		TCanvas *c_temp = new TCanvas();
 		TH1F *h_temp;
 
+		bool isData = (filetag_treename.find("data") != string::npos);
+
 		TString hist_name_full = Form("%s__%s", hist_name.c_str(), filetag_treename.c_str());
 		while (hist_name_full.Contains("(")){
 			hist_name_full.Replace(hist_name_full.First("("), 1, "");
@@ -315,11 +317,11 @@ public :
                         h_temp = new TH1F( hist_name_full, "", NBins, xmin, xmax);
                 }
 
-		TCut cut_weight = Form( "weight/SumW" ); 
+		TCut cut_weight = Form( "weight" ); 
 
 		//TCut cut_total   = (cuts_all && cut_compare && selective_cuts[filetag_treename]);
 		TCut cut_total   = cut_weight * (cuts_all && cut_compare && selective_cuts[filetag_treename]);
-		if( !use_weight ) cut_total = (cuts_all && cut_compare && selective_cuts[filetag_treename]);
+		if( !use_weight || isData ) cut_total = (cuts_all && cut_compare && selective_cuts[filetag_treename]);
 		if (debug) cout << "cut_total = " << cut_total << endl;
 
 		cout << "hist_name: " << hist_name << endl;
@@ -345,6 +347,8 @@ public :
 	TH2F* GetHist2D( PlotParams myPlotParams_x, PlotParams myPlotParams_y, string filetag_treename, TCut cut_compare ){
                 if( debug) cout<<"MicroNTuplePlotter::GetHist2D()"<<endl;  
 
+		bool isData = (filetag_treename.find("data") != string::npos);
+
                 string hist_name_x	 = myPlotParams_x.hist_name;
                 string label_x		 = myPlotParams_x.label_x;
                 int NBins_x	 	 = myPlotParams_x.nbins;
@@ -367,7 +371,7 @@ public :
 
 		//TCut cut_total   = (cuts_all && cut_compare && selective_cuts[filetag_treename]);
 		TCut cut_total   = cut_weight * (cuts_all && cut_compare && selective_cuts[filetag_treename]);
-		if( !use_weight ) cut_total = (cuts_all && cut_compare && selective_cuts[filetag_treename]);
+		if( !use_weight || isData) cut_total = (cuts_all && cut_compare && selective_cuts[filetag_treename]);
 		if(debug) cout << "cut_total = " << cut_total << endl;
 		
 		trees[filetag_treename]->Draw( Form( "%s:%s >> "+hist_name_full, hist_name_y.c_str(), hist_name_x.c_str() ), cut_total , "");

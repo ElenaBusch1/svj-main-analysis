@@ -3,11 +3,11 @@
 // -------------------------------------------------------------------------------------------------
 void myPlotter(){
 
-	string path = "/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v7/v7.3/user.ebusch.";
+	string path = "/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v7/v7.4/user.ebusch.";
 	//string path = "/eos/user/e/ebusch/SVJ/v7.1_micro/user.kipark.";
 	
 	//vector<string> filetags = {"QCDbkg", "WpJets", "ZpJets", "ttbarr", "singlt", "dibson", "508547","508548","508549","508550" };
-	vector<string> filetags = {"QCDbkg"};// "515495", "515498", "515503", "515506", "515515", "515518"}; // pairs
+	vector<string> filetags = {"dataAll","QCDskim"};// "515495", "515498", "515503", "515506", "515515", "515518"}; // pairs
 	//vector<string> filetags = {/*"totalBKG",*/ "515487", "515499", "515507", "515515", "515519", "515523"}; // masses
 	//vector<string> filetags = {"QCDbkg", "Znunu", "515503", "515506"};
 	//vector<string> filetags_signal = {"508547.mc16d","508548.mc16d", "508549.mc16d", "508550.mc16d"};
@@ -48,7 +48,7 @@ void myPlotter(){
         plotter.plot_log = false;
         plotter.plot_log_ratio = false;
 	plotter.plot_error = true;
-        plotter.output_file_tag ="v7p3";
+        plotter.output_file_tag ="v7p4";
 	plotter.SetTreeName( "PostSel" );
         plotter.use_weight = true;
 	plotter.stamp_counts = false;
@@ -96,7 +96,7 @@ void myPlotter(){
         //plotter.SetPlots ( { P_jet1_DL1dv01, P_jet2_DL1dv01, P_jet1_GN1, P_jet2_GN1} );
 	//plotter.SetPlots( {P_dphi_min_MET, P_mT_jj_neg, P_met_jj_neg, P_dphi_MET_j1j2});
 	//plotter.SetPlots ( {P_mT_jj, P_jet1_pt} );
-	plotter.Plot("");
+	plotter.Plot("ratio");
 
         //***************** 2D Plot *******************// 	
 	//plotter.Plot2D(P_mT_jj, P_met_met);
