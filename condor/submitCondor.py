@@ -10,7 +10,7 @@ eosPath = "root://eosatlas.cern.ch//eos/atlas/atlascerngroupdisk/phys-exotics/jd
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
-    for file_list in ["qcd_v7p4.txt"]:
+    for file_list in ["znunu_v7p4.txt"]:
         with open(file_list, "r") as f:
             files = []
             for line in f:
@@ -40,9 +40,7 @@ if __name__ == "__main__":
             os.system("echo '' >> submit.sub")
             os.system("echo 'should_transfer_files = YES' >> submit.sub")
             os.system("echo 'when_to_transfer_output = ON_EXIT' >> submit.sub")
-            #os.system("echo 'initialdir = /afs/cern.ch/work/e/ebusch/public/SVJ/signal_request/condor/"+numName+"' >> submit.sub")
             os.system("echo 'initialdir = /afs/cern.ch/work/e/ebusch/public/SVJ/ana-exot-2021-19/condor/v7.4' >> submit.sub")
-            #os.system("echo 'sampledir = /nevis/xenia/data/users/jgonski/xbb/Xbb_merged_samples/0121_PCJKDL1r' >> submit.sub")
             os.system("echo 'workdir = /afs/cern.ch/work/e/ebusch/public/SVJ/ana-exot-2021-19/condor' >> submit.sub")
             os.system("echo 'transfer_input_files = $(workdir)/condor_run.sh, $(workdir)/fileSkimmer.C, $(workdir)/fileSkimmer.h, "+filePath+"' >> submit.sub")
             os.system("echo 'transfer_output_files = skim."+fileName+"' >> submit.sub")

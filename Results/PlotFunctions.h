@@ -195,6 +195,7 @@ string GetLegendNames( string filetag  ){
   filetag_legend["364712"] = "JZ12";
   filetag_legend["QCDbkg"] = "QCD";
   filetag_legend["QCDskim"] = "QCD 10%";
+  filetag_legend["BKGskim"] = "QCD+Znn (10%)";
   filetag_legend["QCDtest.mc20e"] = "QCD";
   filetag_legend["singlt"] = "Single top";
   filetag_legend["dibson"] = "Diboson";

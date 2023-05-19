@@ -7,7 +7,7 @@ void myPlotter(){
 	//string path = "/eos/user/e/ebusch/SVJ/v7.1_micro/user.kipark.";
 	
 	//vector<string> filetags = {"QCDbkg", "WpJets", "ZpJets", "ttbarr", "singlt", "dibson", "508547","508548","508549","508550" };
-	vector<string> filetags = {"dataAll","QCDskim"};// "515495", "515498", "515503", "515506", "515515", "515518"}; // pairs
+	vector<string> filetags = {"dataAll","BKGskim"};// "515495", "515498", "515503", "515506", "515515", "515518"}; // pairs
 	//vector<string> filetags = {/*"totalBKG",*/ "515487", "515499", "515507", "515515", "515519", "515523"}; // masses
 	//vector<string> filetags = {"QCDbkg", "Znunu", "515503", "515506"};
 	//vector<string> filetags_signal = {"508547.mc16d","508548.mc16d", "508549.mc16d", "508550.mc16d"};
@@ -48,7 +48,7 @@ void myPlotter(){
         plotter.plot_log = false;
         plotter.plot_log_ratio = false;
 	plotter.plot_error = true;
-        plotter.output_file_tag ="v7p4";
+        plotter.output_file_tag ="v7p4BKG";
 	plotter.SetTreeName( "PostSel" );
         plotter.use_weight = true;
 	plotter.stamp_counts = false;
