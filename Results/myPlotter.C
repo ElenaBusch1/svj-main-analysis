@@ -44,8 +44,8 @@ void myPlotter(){
 	class MicroNTuplePlotter plotter( filetags, path );
 
         //***************** Plot General options *******************// 
-        plotter.plot_norm = true;
-        plotter.plot_log = false;
+        plotter.plot_norm_full = true;
+        plotter.plot_log = true;
         plotter.plot_log_ratio = false;
 	plotter.plot_error = true;
         plotter.output_file_tag ="v7p4BKG";
@@ -91,7 +91,7 @@ void myPlotter(){
 	//plotter.PlotOverlay("");
 
 	//plotter.SetPlots ( plot_all );
-	plotter.SetPlots ( {P_met_phi} );
+	plotter.SetPlots ( {P_jet1_pt} );
 	//plotter.SaveOutputFile("test");
         //plotter.SetPlots ( { P_jet1_DL1dv01, P_jet2_DL1dv01, P_jet1_GN1, P_jet2_GN1} );
 	//plotter.SetPlots( {P_dphi_min_MET, P_mT_jj_neg, P_met_jj_neg, P_dphi_MET_j1j2});
@@ -99,5 +99,6 @@ void myPlotter(){
 	plotter.Plot("ratio");
 
         //***************** 2D Plot *******************// 	
-	//plotter.Plot2D(P_mT_jj, P_met_met);
+	//plotter.Plot2D(P_jet1_phi, P_met_phi);
+	//plotter.Plot2D(P_jet1_pt, P_met_met);
 }

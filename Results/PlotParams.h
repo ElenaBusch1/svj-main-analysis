@@ -19,19 +19,19 @@ float getDphi(float phi1, float phi2){
 
 
 PlotParams P_met_met 			= {"met_met", "Missing E_{T}", "MET [GeV]", 50, 0, 1000};
-PlotParams P_met_phi			= {"met_phi", "Missing E_{T} #phi", "#phi [rad]", 50, -3.14, 3.14 };
+PlotParams P_met_phi			= {"met_phi", "Missing E_{T} #phi", "MET #phi", 50, -3.14, 3.14 };
 PlotParams P_TruthMET_TruthSumEt 	= {"MET_TruthMET_TruthSumEt", "TruthMET SumE_{T}", "E [GeV]", 50, 0, 700};  
 PlotParams P_TruthMET_TruthPhi	 	= {"MET_TruthMET_TruthPhi", "TruthMET #phi", "#phi [rad]", 50, -3.14, 3.14};  
 PlotParams P_n_jets			= {"n_jets", "Number of R=0.4 Jets", "N_{jets}", 20, 0, 20};
 PlotParams P_n_fatjets			= {"n_fatjets", "Number of R=1.0 Jets", "N_{fatjets}", 12, 0, 12};
 
-PlotParams P_jet1_pt			= {"jet1_pt", "Leading R=0.4 Jet p_{T}", "p_{T} [GeV]", 70, 0, 3500};
+PlotParams P_jet1_pt			= {"jet1_pt", "Leading R=0.4 Jet p_{T}", "p_{T} [GeV]", 70, 350, 800};
 PlotParams P_jet1_eta			= {"jet1_eta", "Leading R=0.4 Jet Eta", "#eta", 50, -5.0, 5.0};
-PlotParams P_jet1_phi			= {"jet1_phi", "Leading R=0.4 Jet Phi", "#phi", 50, -3.14, 3.14};
+PlotParams P_jet1_phi			= {"jet1_phi", "Leading R=0.4 Jet Phi", "j1 #phi", 50, -3.14, 3.14};
 PlotParams P_jet1_E			= {"jet1_E", "Leading R=0.4 Jet E", "Energy [GeV]", 50, 0, 3000};
 PlotParams P_jet2_pt			= {"jet2_pt", "Subleading R=0.4 Jet p_{T}", "p_{T} [GeV]", 70, 0, 1500};
 PlotParams P_jet2_eta			= {"jet2_eta", "Subleading R=0.4 Jet Eta", "#eta", 50, -5.0, 5.0};
-PlotParams P_jet2_phi			= {"jet2_phi", "Subleading R=0.4 Jet Phi", "#phi", 50, -3.14, 3.14};
+PlotParams P_jet2_phi			= {"jet2_phi", "Subleading R=0.4 Jet Phi", "j2 #phi", 50, -3.14, 3.14};
 PlotParams P_jet2_E			= {"jet2_E", "Subleading R=0.4 Jet E", "Energy [GeV]", 50, 0, 300};
 PlotParams P_fabs_jet1_eta		= {"fabs(jet1_eta)", "Leading R=0.4 Jet |Eta|", "|#eta|", 50, 0, 3.0};
 PlotParams P_fabs_jet2_eta		= {"fabs(jet2_eta)", "Subleading R=0.4 Jet |Eta|", "|#eta|", 50, 0, 3.0};
@@ -109,6 +109,8 @@ PlotParams P_hT_r04			= {"hT_r04", "Small-R Jet pT Sum", "HT [GeV]", 100, 0, 300
 PlotParams P_aplanarity			= {"aplanarity", "Aplanarity", "aplanarity", 50, 0, 0.5};
 PlotParams P_sphericity			= {"sphericity", "Sphericity", "sphericity", 50, 0, 1.0};
 PlotParams P_sphericity_T		= {"sphericity_T", "Transverse Sphericity", "sphericity_T", 50, 0, 1.0};
+
+PlotParams P_dphi_j1MET			= {"getDphi(jet1_phi, met_phi)", "#Delta#phi (j1,MET)", "#Delta#phi", 50, 0, 3.2};
 
 // Overlayed Plots
 PlotParams OP_jet_pt			= {"jet_pt", "Jet Pt", "p_{T} [GeV]", 50, 0, 1000};
