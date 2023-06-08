@@ -40,57 +40,33 @@ void MicroNTupleMaker::Loop()
 		if (processedEntries % 10000 == 0 && nentries <= 2000000) cout << "Processed " << processedEntries << " events..." << endl;
 		if (processedEntries % 100000 == 0 && nentries > 2000000) cout << "Processed " << processedEntries << " events..." << endl;
 		
-		cutflow->Fill(0);
-	
-		// apply nSmallRJets >=2 (required for code to run) 	
-		if (njet < 2) continue;
-		cutflow->Fill(1);      
-		
-		//jet1_eta preselection
-		if (fabs(jet_eta->at(0)) > 2.1) continue;
-		cutflow->Fill(2);      
-	
-		//jet1_eta preselection
-		if (fabs(jet_eta->at(1)) > 2.1) continue;
-		cutflow->Fill(3);      
-
                 // check DSID
                 if (dsid_int != mcChannelNumber) cout << "ERROR: Entry 0 DSID " << dsid_int << " does not match event " << mcEventNumber << "(" << jentry << ") DSID" << mcChannelNumber << endl;
- 
-		// get svj info 
-		vector<pair<int,float>> svj_info; // {{n_svj,dphi_min}, {n_asvj,dphi_max}}
-		//vector<pair<int,float>> svj_info_r04;
-		svj_info = FindSVJ( jet_phi );
-		//svj_info_r04 = FindSVJ( jet_phi );
- 			
-		// assign SVJ variables
-		dphi_min = svj_info[0].second;
-		dphi_max = svj_info[1].second;
-
-		dphi_min_MET = dphi_min/ metFinalClus;
-
-		//dphi_min_r04 = svj_info_r04[0].second;
 
 		// create relevant 4 vectors
-		TLorentzVector v1, v2, v1fat, v2fat;
+		TLorentzVector v1, v2, met_v;
 
 		v1.SetPtEtaPhiE(jet_pt->at(0), jet_eta->at(0), jet_phi->at(0), jet_E->at(0));
 		v2.SetPtEtaPhiE(jet_pt->at(1), jet_eta->at(1), jet_phi->at(1), jet_E->at(1));
 		//v_svj.SetPtEtaPhiE(jet_pt->at(n_svj), jet_eta->at(n_svj), jet_phi->at(n_svj), jet_E->at(n_svj));
 		//v_asvj.SetPtEtaPhiE(jet_pt->at(n_asvj), jet_eta->at(n_asvj), jet_phi->at(n_asvj), jet_E->at(n_asvj));
+		met_v.SetPtEtaPhiM(metFinalClus,0,metFinalClusPhi,0.0);
 
 		// y* preselection
 		deltaY_12 = GetDeltaY(v1,v2);
-		if (deltaY_12 > 2.8) continue;
-		cutflow->Fill(4);      
+                float dPhi1 = GetDPhi(v1,met_v);
+                float dPhi2 = GetDPhi(v2,met_v);
+		dphi_min = min(dPhi1,dPhi2);		
+		dphi_max = max(dPhi1,dPhi2);		
+		// svj variablei
+		maxphi_minphi = dphi_max - dphi_min;
 
 		// distance between jets
 		dR_12 = GetdR(v1,v2);
 		deta_12 = GetDEta(v1.Eta(),v2.Eta());
+        	dphi_12 = GetDPhi(v1,v2);
 		//deltaY_sa = GetDeltaY(v_svj,v_asvj);
 		
-		// svj variablei
-		maxphi_minphi = dphi_max - dphi_min;
 	
 		// pt balance
 		pt_balance_12 = GetPtBalance(v1,v2);
@@ -105,17 +81,18 @@ void MicroNTupleMaker::Loop()
 		//jet2_mT = v2.Mt();
 		//jet_svj_mT = v_svj.Mt();
 		//jet_asvj_mT = v_asvj.Mt();
-                mT_jj = GetMt(v1,v2,metFinalClus, metFinalClusPhi);
+                mT_jj = GetMt(v1,v2,met_v);
 
 		// -j1_pT -j2_pT
 		met_jj_neg = jet_pt->at(0) + jet_pt->at(1);
 		mT_jj_neg = GetMtNeg(v1,v2);
-		dphi_MET_j1j2 = GetDPhiMET(v1,v2,metFinalClusPhi);
+		dphi_MET_j1j2 = GetDPhiMET(v1,v2,met_v);
 
 		// rT
 		rT = metFinalClus / mT_jj;
 
-		// SR selection
+		/* 
+ 		// SR selection
 		// apply dEta < 1.5
 		if ( deltaY_12 >= 1.5) continue;
 		cutflow->Fill(5);
@@ -123,12 +100,13 @@ void MicroNTupleMaker::Loop()
 		if ( rT <= 0.15) continue;
 		cutflow->Fill(6);
 		// apply mT > 1.5 TeV
-		//if ( mT_jj <= 1500) continue;
-		//cutflow->Fill(7);
+		if ( mT_jj <= 1500) continue;
+		cutflow->Fill(7);
 		// apply dphi < 0.8
 		if ( dphi_min >= 0.8) continue;
 		cutflow->Fill(7);
-		
+		*/
+
 		/*if ( rT > 0.25){
 			mT_jj_highRT = mT_jj;
 			mT_jj_neg_highRT = mT_jj_neg;

@@ -37,7 +37,6 @@ do
 	done
 done
 
-
 #submitdir=grid_multijet
 #inputFile=multijet_mc16e.txt
 

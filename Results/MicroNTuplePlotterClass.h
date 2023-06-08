@@ -299,7 +299,7 @@ public :
 		TH1F *h_temp;
 
 		TString hist_name_full = Form("%s__%s", hist_name.c_str(), filetag_treename.c_str());
-		if (hist_name_full.Contains("(")){
+		while (hist_name_full.Contains("(")){
 			hist_name_full.Replace(hist_name_full.First("("), 1, "");
 			hist_name_full.Replace(hist_name_full.First(")"), 1, "");
 		}
@@ -315,7 +315,7 @@ public :
                         h_temp = new TH1F( hist_name_full, "", NBins, xmin, xmax);
                 }
 
-		TCut cut_weight = Form( "weight" ); 
+		TCut cut_weight = Form( "weight/SumW" ); 
 
 		//TCut cut_total   = (cuts_all && cut_compare && selective_cuts[filetag_treename]);
 		TCut cut_total   = cut_weight * (cuts_all && cut_compare && selective_cuts[filetag_treename]);
@@ -363,7 +363,7 @@ public :
 		TString hist_name_full = Form("%s__%s__%s", hist_name_x.c_str(), hist_name_y.c_str(), filetag_treename.c_str());
 		h_temp = new TH2F( hist_name_full, "", NBins_x, xmin, xmax, NBins_y, ymin, ymax);	
 		
-		TCut cut_weight = Form( "weight" ); 
+		TCut cut_weight = Form( "weight/SumW" ); 
 
 		//TCut cut_total   = (cuts_all && cut_compare && selective_cuts[filetag_treename]);
 		TCut cut_total   = cut_weight * (cuts_all && cut_compare && selective_cuts[filetag_treename]);
@@ -451,7 +451,7 @@ public :
 		
 			string legend_name = hist_tag;
 			if( stamp_integral && !stamp_counts ){
-				legend_name = Form("%s (Int=%4.2e)", hist_tag.c_str(), h->Integral(0,myPlotParams.nbins+1)*1.39e8 );
+				legend_name = Form("%s (Int=%4.2e)", hist_tag.c_str(), h->Integral(0,myPlotParams.nbins+1) );
 			}
 			if (stamp_counts && !stamp_integral){
 				legend_name = Form("%s (NE=%i)", hist_tag.c_str(), int(h->GetEntries()));
@@ -611,7 +611,7 @@ public :
 
                         double max_x = h->GetXaxis()->GetBinCenter( h->GetMaximumBin() );
                         double max_y = h->GetMaximum();
-			string max_vals =  Form("%.1e , %.1f ", max_y, max_x );
+			string max_vals =  Form("%.1e , %.3f ", max_y, max_x );
                         h->SetName( Form("%s", max_vals.c_str() ));
 			legend_names.push_back(Form("%s", max_vals.c_str()));
 			
