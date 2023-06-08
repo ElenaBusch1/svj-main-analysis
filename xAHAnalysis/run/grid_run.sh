@@ -7,31 +7,33 @@ loglevel=info
 # changing to my area
 parentsubmitdir="/afs/cern.ch/work/r/rgarg/public/Analyses/SemiVisibleJets/NTupleMaker/ana-exot-2021-19/xAHAnalysis/run/"
 WorkDir_DIR="/afs/cern.ch/work/r/rgarg/public/Analyses/SemiVisibleJets/NTupleMaker/ana-exot-2021-19/xAHAnalysis/"
-configFile=$WorkDir_DIR/src/SVJAlgo/data/config_SVJAlgo_bkg.py
-sigconfigFile=$WorkDir_DIR/src/SVJAlgo/data/config_SVJAlgo_signal.py
+configFile=$WorkDir_DIR/src/SVJAlgo/data/config_SVJAlgo_MC.py
+sigconfigFile=$WorkDir_DIR/src/SVJAlgo/data/config_SVJAlgo_MC.py
 
 #for BKG in ttbar wplusjets zplusjets
-for BKG in multijet
-do
-	submitdir=grid_${BKG}
-	for MC in mc20a mc20d mc20e
-	do
-		inputFile=${BKG}_${MC}.txt
-		echo $inputFile
-		echo "xAH_run.py --inputRucio --inputList --files $inputFile --config $configFile --extraOptions="" --force --submitDir $submitdir prun --optBatchShellInit 'source $WorkDir_DIR/setup.sh' --optGridOutputSampleName=user.ebusch.%in:name[2]%.%in:name[3]%.v7a.${MC} --optGridNGBPerJob=2"
-		xAH_run.py --inputRucio --inputList --files $inputFile --config $configFile --extraOptions="" --force --submitDir $submitdir prun --optBatchShellInit 'source $WorkDir_DIR/setup.sh' --optGridOutputSampleName=user.ebusch.%in:name[2]%.%in:name[3]%.v7a.${MC} --optGridNGBPerJob=2
-	done
-done
+#for BKG in multijet
+#do
+#	submitdir=grid_${BKG}
+	#for MC in mc20a mc20d mc20e
+#	for MC in retry
+#	do
+#		inputFile=${BKG}_${MC}.txt
+#		echo $inputFile
+#		echo "xAH_run.py --inputRucio --inputList --files $inputFile --config $configFile --extraOptions="" --force --submitDir $submitdir prun --optBatchShellInit 'source $WorkDir_DIR/setup.sh' --optGridOutputSampleName=user.rgarg.%in:name[2]%.%in:name[3]%.v7a.${MC} --optGridNGBPerJob=2"
+#		xAH_run.py --inputRucio --inputList --files $inputFile --config $configFile --extraOptions="" --force --submitDir $submitdir prun --optBatchShellInit 'source $WorkDir_DIR/setup.sh' --optGridOutputSampleName=user.rgarg.%in:name[2]%.%in:name[3]%.v7a.${MC} --optGridNGBPerJob=2
+#	done
+#done
 
 for SIG in signal
 do
 	submitdir=grid_${SIG}
-	for MC in mc20a mc20d mc20e
+	#for MC in mc20a mc20d mc20e
+	for MC in mc20d_retry mc20e_retry
 	do
 		inputFile=${SIG}_${MC}.txt
 		echo $inputFile
-		echo "xAH_run.py --inputRucio --inputList --files $inputFile --config $sigconfigFile --extraOptions="" --force --submitDir $submitdir prun $PUfile --optBatchShellInit 'source $WorkDir_DIR/setup.sh' --optGridOutputSampleName=user.ebusch.%in:name[2]%.%in:name[3]%.v7a.${MC} --optGridNGBPerJob=2"
-		xAH_run.py --inputRucio --inputList --files $inputFile --config $sigconfigFile --extraOptions="" --force --submitDir $submitdir prun --optBatchShellInit 'source $WorkDir_DIR/setup.sh' --optGridOutputSampleName=user.ebusch.%in:name[2]%.%in:name[3]%.v7a.${MC} --optGridNGBPerJob=2
+		echo "xAH_run.py --inputRucio --inputList --files $inputFile --config $sigconfigFile --extraOptions="" --force --submitDir $submitdir prun $PUfile --optBatchShellInit 'source $WorkDir_DIR/setup.sh' --optGridOutputSampleName=user.rgarg.%in:name[2]%.%in:name[3]%.v7a.${MC} --optGridNGBPerJob=2"
+		xAH_run.py --inputRucio --inputList --files $inputFile --config $sigconfigFile --extraOptions="" --force --submitDir $submitdir prun --optBatchShellInit 'source $WorkDir_DIR/setup.sh' --optGridOutputSampleName=user.rgarg.%in:name[2]%.%in:name[3]%.v7a.${MC} --optGridNGBPerJob=2
 	done
 done
 
@@ -41,4 +43,3 @@ done
 
 
 #xAH_run.py --inputRucio --inputList --files $inputFile --config $configFile --force --submitDir $submitdir prun --optBatchShellInit 'source $WorkDir_DIR/setup.sh' --optGridOutputSampleName=user.ebusch.%in:name[2]%.%in:name[3]%.v3a.mc16e --optGridNGBPerJob=4
-
