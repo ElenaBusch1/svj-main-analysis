@@ -90,7 +90,7 @@ PlotParams P_dphi_max			= {"dphi_max", "#Delta#phi (furthest jet, MET)", "#Delta
 PlotParams P_dphi_min			= {"dphi_min", "#Delta#phi (closest jet, MET)", "#Delta#phi", 50, 0, 3.14};
 PlotParams P_dphi_min_MET		= {"dphi_min_MET", "#Delta#phi (closest jet, MET) / MET", "#Delta#phi/MET", 50, 0, 0.5};
 PlotParams P_dphi_MET_j1j2		= {"dphi_MET_j1j2", "#Delta#phi (MET, -j1-j2)", "#Delta#phi", 50, 0, 3.14};
-PlotParams P_deltaY_12			= {"deltaY_12", "#Delta Y (leading jet, subleading jet)", "#Delta Y", 50, 0, 5};
+PlotParams P_deltaY_12			= {"deltaY_12", "#Delta Y (leading jet, subleading jet)", "#Delta Y", 50, 0, 3.5};
 PlotParams P_mjj_12			= {"mjj_12", "Invariant Mass R=0.4 Jets (Leading, Subleading)", "m_{jj} [GeV]", 80, 500, 6500};
 PlotParams P_mJJ_12			= {"mJJ_12", "Invariant Mass R=1.0 Jets (Leading, Subleading)", "m_{JJ} [GeV]", 100, 0, 3000};
 PlotParams P_mT_jj			= {"mT_jj", "mT System", "mT [GeV]", 80, 500, 6500};
