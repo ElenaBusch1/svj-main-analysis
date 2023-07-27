@@ -1,3 +1,6 @@
+#include "fastjet/ClusterSequence.hh"
+#include "fastjet/PseudoJet.hh"
+//#include "src/JetSubstructure.cxx"
 void MicroNTupleMaker::Loop()
 {
 //   In a ROOT session, you can do:
@@ -32,11 +35,12 @@ void MicroNTupleMaker::Loop()
 	int processedEntries = 0;
 	Long64_t nbytes = 0, nb = 0;
 	for (Long64_t jentry=0; jentry<nentries;jentry++) {
+	  //for (Long64_t jentry=0; jentry<50;jentry++) {
 		Long64_t ientry = LoadTree(jentry);
 		if (ientry < 0) break;
 		nb = fChain->GetEntry(jentry);   nbytes += nb;
 		processedEntries++;
-		
+
 		if (processedEntries % 10000 == 0 && nentries <= 2000000) cout << "Processed " << processedEntries << " events..." << endl;
 		if (processedEntries % 100000 == 0 && nentries > 2000000) cout << "Processed " << processedEntries << " events..." << endl;
 		
@@ -140,7 +144,62 @@ void MicroNTupleMaker::Loop()
 		}*/
 		// HT
 		hT = GetHT(jet_pt);
-		
+
+		//Jet Substructure variables
+		//Jet substrucutre variables for leading jet
+		std::vector<float> leadjet_GhostTrack_pt = jet_GhostTrack_pt->at(0);
+		std::vector<float> leadjet_GhostTrack_eta = jet_GhostTrack_eta->at(0);
+		std::vector<float> leadjet_GhostTrack_phi = jet_GhostTrack_phi->at(0);
+		std::vector<float> leadjet_GhostTrack_e = jet_GhostTrack_e->at(0);
+
+		std::vector<fastjet::PseudoJet> leadjet_clusters;
+		leadjet_clusters.clear();
+
+		for(int leadjet_trk=0; leadjet_trk<leadjet_GhostTrack_pt.size();leadjet_trk++){
+		  TLorentzVector temp_p4;
+		  temp_p4.SetPtEtaPhiE(leadjet_GhostTrack_pt.at(leadjet_trk), leadjet_GhostTrack_eta.at(leadjet_trk), leadjet_GhostTrack_phi.at(leadjet_trk), leadjet_GhostTrack_e.at(leadjet_trk));
+
+		  fastjet::PseudoJet p(temp_p4.Px(), temp_p4.Py(), temp_p4.Pz(), temp_p4.E());
+		  leadjet_clusters.push_back(p);
+		}
+
+		leadjet_NsubJettiness_vars.clear();
+		leadjet_ECFs.clear();
+		leadjet_ktscale.clear();
+		if(leadjet_clusters.size() > 0){
+		  leadjet_NsubJettiness_vars = Jet_nSubjettiness(leadjet_clusters);
+		  leadjet_ECFs = Jet_energyCorrelator(leadjet_clusters);
+		  leadjet_ktscale = Jet_KTsplittingScale(leadjet_clusters);
+		  leadjet_qw = Jet_qw(leadjet_clusters);
+		}
+
+		//Jet substrucutre variables for subleading jet
+		std::vector<float> subleadjet_GhostTrack_pt = jet_GhostTrack_pt->at(1);
+		std::vector<float> subleadjet_GhostTrack_eta = jet_GhostTrack_eta->at(1);
+		std::vector<float> subleadjet_GhostTrack_phi = jet_GhostTrack_phi->at(1);
+		std::vector<float> subleadjet_GhostTrack_e = jet_GhostTrack_e->at(1);
+
+		std::vector<fastjet::PseudoJet> subleadjet_clusters;
+		subleadjet_clusters.clear();
+
+		for(int subleadjet_trk=0; subleadjet_trk<subleadjet_GhostTrack_pt.size();subleadjet_trk++){
+		  TLorentzVector temp_p4;
+		  temp_p4.SetPtEtaPhiE(subleadjet_GhostTrack_pt.at(subleadjet_trk), subleadjet_GhostTrack_eta.at(subleadjet_trk), subleadjet_GhostTrack_phi.at(subleadjet_trk), subleadjet_GhostTrack_e.at(subleadjet_trk));
+
+		  fastjet::PseudoJet p(temp_p4.Px(), temp_p4.Py(), temp_p4.Pz(), temp_p4.E());
+		  subleadjet_clusters.push_back(p);
+		}
+
+		subleadjet_NsubJettiness_vars.clear();
+		subleadjet_ECFs.clear();
+		subleadjet_ktscale.clear();
+		if(subleadjet_clusters.size() > 0){
+		  subleadjet_NsubJettiness_vars = Jet_nSubjettiness(subleadjet_clusters);
+		  subleadjet_ECFs = Jet_energyCorrelator(subleadjet_clusters);
+		  subleadjet_ktscale = Jet_KTsplittingScale(subleadjet_clusters);
+		  subleadjet_qw = Jet_qw(subleadjet_clusters);
+		}
+
 		// save output tree
 		//cout << "Filling" << endl;
 		FillOutputTrees("PostSel");

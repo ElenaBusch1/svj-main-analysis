@@ -36,6 +36,7 @@ c.algorithm("BasicEventSelection",    {
   "m_applyEventCleaningCut"     : True,
   "m_applyJetCleaningEventFlag" : True,
   "m_applyCoreFlagsCut"	        : True,
+  "m_applyIsBadBatmanFlag"      : True,
   "m_vertexContainerName"       : "PrimaryVertices",
   "m_applyPrimaryVertexCut"     : True,
   "m_PVNTrack"                  : 2,

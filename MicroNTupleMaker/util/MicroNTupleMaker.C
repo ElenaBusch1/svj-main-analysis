@@ -8,9 +8,11 @@ using namespace std;
 #include "../src/HistHelper.cxx"
 #include "../src/WeightHelper.cxx"
 #include "../src/Loop.cxx"
+#include "../src/JetSubstructure.cxx"
 #include <TH2.h>
 #include <TStyle.h>
 #include <TCanvas.h>
+#include <typeinfo>
 
 using filesystem::directory_iterator;
 
@@ -118,7 +120,7 @@ void MicroNTupleMaker(string infiletag = "", bool local = false, string infilepa
 
 	// Create output file
 	string dsid = "";
-        string user = "user.rgarg.";
+        string user = "user.ebusch.";
         if (local) dsid = infiletag.substr(user.length(),6);
 	if (local) cout << "local DSID: " << dsid << endl;
         //string dsid = to_string(myMaker.dsid_int);
@@ -132,7 +134,10 @@ void MicroNTupleMaker(string infiletag = "", bool local = false, string infilepa
 	//string outfiletag = "user.kipark." + infiletag + "." + mc;
         TString outfilename;
      
-	if (local) outfilename = Form( "MicroNTuples/%s.root", outfiletag.c_str() );
+	//if (local) outfilename = Form( "MicroNTuples/%s.root", outfiletag.c_str() );
+	//Saving in EOS
+	//if (local) outfilename = Form( "/eos/user/r/rgarg/Rocky/Analyses/SemiVisibleJets/Samples/v8/MicroNtuples/%s.root", outfiletag.c_str() );
+	if (local) outfilename = Form( "MicroNtuples/%s.root", outfiletag.c_str() );
 	else outfilename = "output.root";
 	//added
         //else outfilename = Form( "/eos/user/k/kipark/ana-exot-2021-19/MicroNTupleMaker/MicroNTuples/%s.root", outfiletag.c_str() );

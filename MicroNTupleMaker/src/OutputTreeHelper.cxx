@@ -16,6 +16,14 @@ void MicroNTupleMaker::DeclareOutputTrees(){
        		"jet1_NumTrkPt500PV", "jet1_NumTrkPt1000PV", "jet1_SumPtTrkPt500PV", "jet1_TrackWidthPt1000PV",
        		"jet2_NumTrkPt500PV", "jet2_NumTrkPt1000PV", "jet2_SumPtTrkPt500PV", "jet2_TrackWidthPt1000PV",
 
+		// -- Jet Substructure calculations -- //
+		"jet1_tau1", "jet1_tau2", "jet1_tau3", "jet1_tau21", "jet1_tau32", 
+		"jet2_tau1", "jet2_tau2", "jet2_tau3", "jet2_tau21", "jet2_tau32", 
+		"jet1_ECF_C2", "jet1_ECF_D2", 
+		"jet2_ECF_C2", "jet2_ECF_D2", 
+		"jet1_ktsplit12", "jet1_ktsplit23", "jet1_qw",
+		"jet2_ktsplit12", "jet2_ktsplit23", "jet2_qw",
+
 		// -- Jet Calculations -- //
 		"maxphi_minphi", "dphi_min", "dphi_max",
 		"dphi_MET_j1j2",
@@ -114,6 +122,34 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
         tree_output_vars["jet1_EMFrac"] = jet_EMFrac->at(0);
         tree_output_vars["jet1_FracSamplingMax"] = jet_FracSamplingMax->at(0);
         tree_output_vars["jet1_Width"] = jet_Width->at(0);
+	if(leadjet_NsubJettiness_vars.size() > 0){
+	  tree_output_vars["jet1_tau1"] = leadjet_NsubJettiness_vars.at(0);
+	  tree_output_vars["jet1_tau2"] = leadjet_NsubJettiness_vars.at(1);
+	  tree_output_vars["jet1_tau3"] = leadjet_NsubJettiness_vars.at(2);
+	  tree_output_vars["jet1_tau21"] = leadjet_NsubJettiness_vars.at(3);
+	  tree_output_vars["jet1_tau32"] = leadjet_NsubJettiness_vars.at(4);
+	}else{
+	tree_output_vars["jet1_tau1"] = -999;
+	tree_output_vars["jet1_tau2"] = -999;
+	tree_output_vars["jet1_tau3"] = -999;
+	tree_output_vars["jet1_tau21"] = -999;
+	tree_output_vars["jet1_tau32"] = -999;
+	}
+	if(leadjet_ECFs.size() > 0){
+	  tree_output_vars["jet1_ECF_C2"] = leadjet_ECFs.at(0);
+	  tree_output_vars["jet1_ECF_D2"] = leadjet_ECFs.at(1);
+	}else{
+	  tree_output_vars["jet1_ECF_C2"] = -999;
+	  tree_output_vars["jet1_ECF_D2"] =-999;
+	}
+	if(leadjet_ktscale.size() > 0){
+	  tree_output_vars["jet1_ktsplit12"] = leadjet_ktscale.at(0);
+	  tree_output_vars["jet1_ktsplit23"] = leadjet_ktscale.at(1);
+	}else{
+	  tree_output_vars["jet1_ktsplit12"] = -999;
+	  tree_output_vars["jet1_ktsplit23"] = -999;
+	}
+	tree_output_vars["jet1_qw"] = leadjet_qw;
 	if (jet_pt->size() >= 2) {
 		tree_output_vars["jet2_pt"] = jet_pt->at(1);
 		tree_output_vars["jet2_eta"] = jet_eta->at(1);
@@ -129,22 +165,60 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
         	tree_output_vars["jet2_EMFrac"] = jet_EMFrac->at(1);
         	tree_output_vars["jet2_FracSamplingMax"] = jet_FracSamplingMax->at(1);
         	tree_output_vars["jet2_Width"] = jet_Width->at(1);
-
+		if(subleadjet_NsubJettiness_vars.size() > 0){
+		  tree_output_vars["jet2_tau1"] = subleadjet_NsubJettiness_vars.at(0);
+		  tree_output_vars["jet2_tau2"] = subleadjet_NsubJettiness_vars.at(1);
+		  tree_output_vars["jet2_tau3"] = subleadjet_NsubJettiness_vars.at(2);
+		  tree_output_vars["jet2_tau21"] = subleadjet_NsubJettiness_vars.at(3);
+		  tree_output_vars["jet2_tau32"] = subleadjet_NsubJettiness_vars.at(4);
+		}else{
+		  tree_output_vars["jet2_tau1"] = -999;
+		  tree_output_vars["jet2_tau2"] = -999;
+		  tree_output_vars["jet2_tau3"] = -999;
+		  tree_output_vars["jet2_tau21"] = -999;
+		  tree_output_vars["jet2_tau32"] = -999;
+		}
+		if(subleadjet_ECFs.size() > 0){
+		  tree_output_vars["jet2_ECF_C2"] = subleadjet_ECFs.at(0);
+		  tree_output_vars["jet2_ECF_D2"] = subleadjet_ECFs.at(1);
+		}else{
+		  tree_output_vars["jet2_ECF_C2"] = -999;
+		  tree_output_vars["jet2_ECF_D2"] =-999;
+		}
+		if(subleadjet_ktscale.size() > 0){
+		  tree_output_vars["jet2_ktsplit12"] = subleadjet_ktscale.at(0);
+		  tree_output_vars["jet2_ktsplit23"] = subleadjet_ktscale.at(1);
+		}else{
+		  tree_output_vars["jet2_ktsplit12"] = -999;
+		  tree_output_vars["jet2_ktsplit23"] = -999;
+		}
+		tree_output_vars["jet2_qw"] = subleadjet_qw;
+	
 	} else {
-		tree_output_vars["jet2_pt"] = -999; 
-		tree_output_vars["jet2_eta"] = -999;
-		tree_output_vars["jet2_phi"] = -999;
-		tree_output_vars["jet2_E"] = -999;
-
-        	tree_output_vars["jet2_DL1dv01"] = -999;
-        	tree_output_vars["jet2_GN1"] = -999;
-        	tree_output_vars["jet2_SumPtTrkPt500PV"] = -999;
-        	tree_output_vars["jet2_NumTrkPt500PV"] = -999;
-        	tree_output_vars["jet2_TrackWidthPt1000PV"] = -999;
-        	tree_output_vars["jet2_NumTrkPt1000PV"] = -999;
-        	tree_output_vars["jet2_EMFrac"] = -999;
-        	tree_output_vars["jet2_FracSamplingMax"] = -999;
-        	tree_output_vars["jet2_Width"] = -999;
+	  tree_output_vars["jet2_pt"] = -999; 
+	  tree_output_vars["jet2_eta"] = -999;
+	  tree_output_vars["jet2_phi"] = -999;
+	  tree_output_vars["jet2_E"] = -999;
+	  
+	  tree_output_vars["jet2_DL1dv01"] = -999;
+	  tree_output_vars["jet2_GN1"] = -999;
+	  tree_output_vars["jet2_SumPtTrkPt500PV"] = -999;
+	  tree_output_vars["jet2_NumTrkPt500PV"] = -999;
+	  tree_output_vars["jet2_TrackWidthPt1000PV"] = -999;
+	  tree_output_vars["jet2_NumTrkPt1000PV"] = -999;
+	  tree_output_vars["jet2_EMFrac"] = -999;
+	  tree_output_vars["jet2_FracSamplingMax"] = -999;
+	  tree_output_vars["jet2_Width"] = -999;
+	  tree_output_vars["jet2_tau1"] = -999;
+	  tree_output_vars["jet2_tau2"] = -999;
+	  tree_output_vars["jet2_tau3"] = -999;
+	  tree_output_vars["jet2_tau21"] = -999;
+	  tree_output_vars["jet2_tau32"] = -999;
+	  tree_output_vars["jet2_ECF_C2"] = -999;
+	  tree_output_vars["jet2_ECF_D2"] = -999;
+	  tree_output_vars["jet2_ktsplit12"] = -999;
+	  tree_output_vars["jet2_ktsplit23"] = -999;
+	  tree_output_vars["jet2_qw"] = -999;
 	}
 
 	tree_output_vars["met_met"] = metFinalClus;
