@@ -10,8 +10,18 @@ WorkDir_DIR="/afs/cern.ch/work/r/rgarg/public/Analyses/SemiVisibleJets/NTupleMak
 configFile=$WorkDir_DIR/src/SVJAlgo/data/config_SVJAlgo_MC.py
 sigconfigFile=$WorkDir_DIR/src/SVJAlgo/data/config_SVJAlgo_MC.py
 
-#for BKG in ttbar wplusjets zplusjets
-#for BKG in multijet
+#for data in data_all
+#do
+#	submitdir=grid_${data}
+#	inputFile=${data}.txt
+#	echo $inputFile
+#	echo "xAH_run.py --inputRucio --inputList --files $inputFile --config $dataconfigFile --extraOptions="" --force --submitDir $submitdir prun --optBatchShellInit 'source $WorkDir_DIR/setup.sh' --optGridOutputSampleName=user.rgarg.%in:name[1]%.%in:name[2]%.v9c --optGridNGBPerJob=2"
+#	xAH_run.py --inputRucio --inputList --files $inputFile --config $dataconfigFile --extraOptions="" --force --submitDir $submitdir prun --optBatchShellInit 'source $WorkDir_DIR/setup.sh' --optGridOutputSampleName=user.rgarg.%in:name[1]%.%in:name[2]%.v9c --optGridNGBPerJob=2
+#done
+
+
+#for BKG in wplusjets zplusjets #ttbar
+#for BKG in multijet wplusjets
 #do
 #	submitdir=grid_${BKG}
 	#for MC in mc20a mc20d mc20e
@@ -19,6 +29,7 @@ sigconfigFile=$WorkDir_DIR/src/SVJAlgo/data/config_SVJAlgo_MC.py
 #	do
 #		inputFile=${BKG}_${MC}.txt
 #		echo $inputFile
+
 #		echo "xAH_run.py --inputRucio --inputList --files $inputFile --config $configFile --extraOptions="" --force --submitDir $submitdir prun --optBatchShellInit 'source $WorkDir_DIR/setup.sh' --optGridOutputSampleName=user.rgarg.%in:name[2]%.%in:name[3]%.v7a.${MC} --optGridNGBPerJob=2"
 #		xAH_run.py --inputRucio --inputList --files $inputFile --config $configFile --extraOptions="" --force --submitDir $submitdir prun --optBatchShellInit 'source $WorkDir_DIR/setup.sh' --optGridOutputSampleName=user.rgarg.%in:name[2]%.%in:name[3]%.v7a.${MC} --optGridNGBPerJob=2
 #	done

@@ -50,6 +50,11 @@ void MicroNTupleMaker::Loop()
 		// create relevant 4 vectors
 		TLorentzVector v1, v2, met_v;
 
+		// MET preselection
+		if(metFinalClus < 200) continue;
+		cutflow->Fill(16);
+		cutflow_weighted->Fill(16,mcEventWeight);
+                
 		v1.SetPtEtaPhiE(jet_pt->at(0), jet_eta->at(0), jet_phi->at(0), jet_E->at(0));
 		v2.SetPtEtaPhiE(jet_pt->at(1), jet_eta->at(1), jet_phi->at(1), jet_E->at(1));
 		//v_svj.SetPtEtaPhiE(jet_pt->at(n_svj), jet_eta->at(n_svj), jet_phi->at(n_svj), jet_E->at(n_svj));
@@ -69,28 +74,17 @@ void MicroNTupleMaker::Loop()
 		dR_12 = GetdR(v1,v2);
 		deta_12 = GetDEta(v1.Eta(),v2.Eta());
         	dphi_12 = GetDPhi(v1,v2);
-		//deltaY_sa = GetDeltaY(v_svj,v_asvj);
-		
 	
 		// pt balance
 		pt_balance_12 = GetPtBalance(v1,v2);
-		//pt_balance_sa = GetPtBalance(v_svj,v_asvj);
-		
-		//Mjj
-		mjj_12 = GetMjj(v1,v2);      
-		//mjj_sa = GetMjj(v_svj,v_asvj);      
-
+	
 		//mT
-		//jet1_mT = v1.Mt();
-		//jet2_mT = v2.Mt();
-		//jet_svj_mT = v_svj.Mt();
-		//jet_asvj_mT = v_asvj.Mt();
                 mT_jj = GetMt(v1,v2,met_v);
 
 		// -j1_pT -j2_pT
 		met_jj_neg = jet_pt->at(0) + jet_pt->at(1);
 		mT_jj_neg = GetMtNeg(v1,v2);
-		dphi_MET_j1j2 = GetDPhiMET(v1,v2,met_v);
+		//dphi_MET_j1j2 = GetDPhiMET(v1,v2,met_v);
 
 		// rT
 		rT = metFinalClus / mT_jj;
@@ -199,7 +193,6 @@ void MicroNTupleMaker::Loop()
 		  subleadjet_ktscale = Jet_KTsplittingScale(subleadjet_clusters);
 		  subleadjet_qw = Jet_qw(subleadjet_clusters);
 		}
-
 		// save output tree
 		//cout << "Filling" << endl;
 		FillOutputTrees("PostSel");

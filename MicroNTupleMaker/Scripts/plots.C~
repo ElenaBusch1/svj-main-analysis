@@ -1,0 +1,131 @@
+#include "TCanvas.h"
+#include "TDirectory.h"
+#include "TF1.h"
+#include "TFile.h"
+#include "TGraph.h"
+#include "TGraphErrors.h"
+#include "TGraphAsymmErrors.h"
+#include "TH1D.h"
+#include "TH2D.h"
+#include "THStack.h"
+#include "TLegend.h"
+#include "TLatex.h"
+#include "TMath.h"
+#include "Math/ProbFunc.h"
+#include "TProfile.h"
+#include "TPaveStats.h"
+#include "TPaveText.h"
+#include "TROOT.h"
+#include "TString.h"
+#include "TStyle.h"
+#include "TEfficiency.h"
+#include "TArrow.h"
+#include "TLine.h"
+#include "TPad.h"
+#include "TVirtualFitter.h"
+#include "TRandom3.h"
+#include "TTree.h"
+
+#include <iostream>
+#include <iomanip>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <cmath>
+
+using namespace ROOT;
+using namespace ROOT::Math;
+
+void comp() {
+
+
+  float t_m, b_m, l_m, r_m;
+  t_m = 0.06; //top margin
+  b_m = 0.08; //botton margin
+  l_m = 0.09; //left margin
+  r_m = 0.03; //right margin
+
+  gStyle->SetOptTitle(0);
+  gStyle->SetPadTopMargin(t_m);
+  gStyle->SetPadBottomMargin(b_m);
+  gStyle->SetPadLeftMargin(l_m);
+  gStyle->SetPadRightMargin(r_m);
+  gStyle->SetCanvasBorderMode(0); gStyle->SetCanvasColor(kWhite);
+  gStyle->SetPadColor(kWhite);
+  gStyle->SetOptTitle(0);   gStyle->SetPadBorderMode(0);
+  gStyle->SetCanvasBorderMode(0);
+  gStyle->SetOptStat(0);
+
+  gStyle->SetPaintTextFormat("4.1f");
+
+  TString f_qcd = "/eos/user/r/rgarg/Rocky/Analyses/SemiVisibleJets/Samples/v8/MicroNtuples/user.ebusch.364710.mc20e.root";
+  TString f_znunu = "/eos/user/r/rgarg/Rocky/Analyses/SemiVisibleJets/Samples/v8/MicroNtuples/user.ebusch.700337.mc20e.root";
+  TString f_2000_2 = "/eos/user/r/rgarg/Rocky/Analyses/SemiVisibleJets/Samples/v8/MicroNtuples/user.ebusch.515499.mc20e.root";
+  TString f_2000_8 = "/eos/user/r/rgarg/Rocky/Analyses/SemiVisibleJets/Samples/v8/MicroNtuples/user.ebusch.515502.mc20e.root";
+  TString f_5000_2 = "/eos/user/r/rgarg/Rocky/Analyses/SemiVisibleJets/Samples/v8/MicroNtuples/user.ebusch.515519.mc20e.root";
+  TString f_5000_8 = "/eos/user/r/rgarg/Rocky/Analyses/SemiVisibleJets/Samples/v8/MicroNtuples/user.ebusch.515522.mc20e.root";
+
+  TFile *qcd = new TFile(f_qcd, "READ");
+  TFile *znunu = new TFile(f_znunu, "READ");
+  TFile *sig_2000_2 = new TFile(f_2000_2, "READ");
+  TFile *sig_2000_8 = new TFile(f_2000_8, "READ");
+  TFile *sig_5000_2 = new TFile(f_5000_2, "READ");
+  TFile *sig_5000_8 = new TFile(f_5000_8, "READ");
+
+
+  TTree* T1 = (TTree*)f1->Get("Z_strongNominal");
+  TTree* T2 = (TTree*)f2->Get("Z_strongNominal");
+  //TTree* T3 = (TTree*)f3->Get("Z_strongNominal");
+  
+  TCanvas *c = new TCanvas("c", "c", 1000, 800);
+  c->cd();
+  c->SetLogy();
+
+  TH1F *h1 = new TH1F("h1", "", 100, 0, 1);
+  TH1F *h2 = new TH1F("h2", "", 100, 0, 1);
+  //TH1F *h3 = new TH1F("h3", "", 100, 0, 1);
+
+  h1->GetXaxis()->SetTitle("BDT_weights");
+  h1->GetYaxis()->SetTitle("Entries");
+  h1->SetLineColor(1);
+  h1->SetLineStyle(1);
+  h1->SetLineWidth(2);
+
+  h2->SetLineColor(kBlue);
+  h2->SetLineStyle(2);
+  h2->SetLineWidth(2);
+
+  //h3->SetLineColor(6);
+  //h3->SetLineStyle(2);
+  //h3->SetLineWidth(2);
+
+  T1->Draw("BDT_weight_withAHOI>>h1");
+  T2->Draw("BDT_weight_withAHOI>>h2");
+  //T3->Draw("BDT_weight_withAHOI>>h3");
+
+  h1->Draw();
+  h2->Draw("same");
+  //h3->Draw("same");
+
+  TLegend *leg = new TLegend(0.62, 0.7, 0.85, 0.9);
+  leg->SetBorderSize(1); leg->SetFillColor(kWhite);
+  leg->SetFillStyle(0);
+  leg->SetFillColor(0);
+  leg->SetTextFont(52);
+  leg->SetTextSize(0.025);
+  leg->SetLineColor(kWhite);
+  leg->SetLineStyle(1);
+  leg->SetLineWidth(1); 
+  leg->AddEntry(h1, "OldScript_fiveFolds_randSeed_run1", "L");
+  leg->AddEntry(h2, "OldScript_fiveFolds_randSeed_run2", "L");
+  //leg->AddEntry(h2, "OldScript_AlreadyTrainedModel_1Fold", "L");
+  //leg->AddEntry(h1, "OldScriptNewResults_fiveFolds", "L");
+  //leg->AddEntry(h1, "NewScript_oneFold_NoChCut", "L");
+  //leg->AddEntry(h2, "NewScript_oneFold_OppChCut", "L");
+
+  leg->Draw("");
+  
+  c->Update();
+  c->Draw();
+  c->SaveAs("OldScript_fiveFolds_randSeed_run1_vs_run2.pdf");
+}  

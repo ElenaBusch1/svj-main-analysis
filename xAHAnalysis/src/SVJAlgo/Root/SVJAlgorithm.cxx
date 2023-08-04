@@ -406,11 +406,11 @@ bool SVJAlgorithm :: executeAnalysis ( const xAOD::EventInfo* eventInfo,
   // not needed  - trigger already saved
   //if(doCutflow) passCut();
 
-  //Adding jet cleaning
+  //Adding tight jet cleaning based on EMtopoJets
   bool passAll = true;
   TLorentzVector vPF, vEMtopo;
   for(int ijet = 0; ijet < signalJets->size(); ijet++){
-    //if(ijet > 1) continue;
+    if(ijet > 1) continue;
     const xAOD::Jet* sigjet = signalJets->at(ijet);
     vPF.SetPtEtaPhiE(sigjet->pt(), sigjet->eta(), sigjet->phi(), sigjet->e());
     float dR = 999.0;
@@ -425,8 +425,6 @@ bool SVJAlgorithm :: executeAnalysis ( const xAOD::EventInfo* eventInfo,
       }
     }
     const xAOD::Jet* closestEMtopojet = EMtopoJets->at(closestJet);
-    vEMtopo.SetPtEtaPhiE(closestEMtopojet->pt(), closestEMtopojet->eta(), closestEMtopojet->phi(), closestEMtopojet->e());
-    float closestR = vPF.DeltaR(vEMtopo);
 
     bool passTight = true;
     if(closestEMtopojet->isAvailable<char>("DFCommonJets_jetClean_TightBad")){
@@ -438,7 +436,7 @@ bool SVJAlgorithm :: executeAnalysis ( const xAOD::EventInfo* eventInfo,
   }
 
   if(!passAll){
-    //wk()->skipEvent();  return EL::StatusCode::SUCCESS;
+    wk()->skipEvent();  return EL::StatusCode::SUCCESS;
   }
 
   // Jet multiplicity
@@ -485,7 +483,7 @@ bool SVJAlgorithm :: executeAnalysis ( const xAOD::EventInfo* eventInfo,
   // MET Selection
   if (m_inMetContainerName != "" && m_metCut >= 0) {
     const xAOD::MissingET* final_clus = *met->find("FinalClus");
-    if(final_clus->sumet() < m_metCut) {
+    if(final_clus->met() < m_metCut*1000) {
       wk()->skipEvent();  return EL::StatusCode::SUCCESS; 
     }
     if(doCutflow) passCut("METSelection");
