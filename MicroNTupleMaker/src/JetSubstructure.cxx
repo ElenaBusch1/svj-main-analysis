@@ -2,6 +2,7 @@
 #include "fastjet/PseudoJet.hh"
 #include <fastjet/contrib/Nsubjettiness.hh>
 #include <fastjet/contrib/EnergyCorrelator.hh>
+#include <fastjet/contrib/LundGenerator.hh>
 
 using namespace fastjet;
 
@@ -68,6 +69,9 @@ std::vector<float> MicroNTupleMaker::Jet_energyCorrelator(std::vector<fastjet::P
   float C2_cluster = std::abs(vECF2) > 1e-8 ? vECF3 * vECF1 / (vECF2 * vECF2) : -999.;
   float D2_cluster = std::abs(vECF2) > 1e-8 ? vECF3 * vECF1* vECF1* vECF1 / (vECF2 * vECF2 * vECF2) : -999.;
 
+  EnergyCorr.push_back(vECF1);
+  EnergyCorr.push_back(vECF2);
+  EnergyCorr.push_back(vECF3);
   EnergyCorr.push_back(C2_cluster);
   EnergyCorr.push_back(D2_cluster);
 
@@ -117,3 +121,32 @@ float MicroNTupleMaker::Jet_qw(std::vector<fastjet::PseudoJet> clusters){
 
   return qw;
 }
+
+std::pair<std::vector<double>,std::vector<double>> MicroNTupleMaker::LundJetPlane(std::vector<fastjet::PseudoJet> clusters){
+
+  std::pair<std::vector<double>,std::vector<double>> lundPlaneVars;
+  
+  // create an instance of LundGenerator, with default options
+  contrib::LundGenerator lund;
+  //std::cout << lund.description() << std::endl;
+
+  fastjet::JetDefinition jet_rebuild_def(fastjet::antikt_algorithm, 0.4, fastjet::E_scheme, fastjet::Best);
+  //Rebuilding jet from the clusters
+  fastjet::ClusterSequence clust_seq_rebuild = fastjet::ClusterSequence(clusters, jet_rebuild_def);
+  std::vector<fastjet::PseudoJet> jets = fastjet::sorted_by_pt(clust_seq_rebuild.inclusive_jets(0.0));
+
+  std::vector<double> lund_x_lnDeltaInv, lund_y_lnKt;
+  lund_x_lnDeltaInv.clear(); lund_y_lnKt.clear();
+
+  for (unsigned int ijet = 0; ijet < jets.size(); ijet++) {    
+    std::vector<contrib::LundDeclustering> declusts = lund(jets[ijet]); //this actually calls lund.result(jets[ijet])
+
+    for (int idecl = 0; idecl < declusts.size(); idecl++) {
+
+      std::pair<double,double> coords = declusts[idecl].lund_coordinates();
+      lund_x_lnDeltaInv.push_back(coords.first);
+      lund_y_lnKt.push_back(coords.second);
+
+    }
+    return std::pair<double,double>(lund_x_lnDeltaInv,lund_y_lnKt);
+  }

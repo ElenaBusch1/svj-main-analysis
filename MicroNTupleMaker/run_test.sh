@@ -5,7 +5,8 @@
 ##infileTag="user.ebusch.364710.Pythia8EvtGen_A14NNPDF23LO_jetjet_JZ10WithSW.v8a.mc20e_tree.root"
 
 #In my area
-filePath="/eos/user/r/rgarg/Rocky/Analyses/SemiVisibleJets/Samples/v8/Ntuples/"
+#filePath="/eos/user/r/rgarg/Rocky/Analyses/SemiVisibleJets/Samples/v8/Ntuples/"
+filePath="/eos/user/r/rgarg/Rocky/Analyses/SemiVisibleJets/ForHon-Leon/"
 ###QCD
 #infileTag="user.ebusch.364710.Pythia8EvtGen_A14NNPDF23LO_jetjet_JZ10WithSW.v8a.mc20e_tree.root"
 #Znunu

@@ -160,11 +160,17 @@ void MicroNTupleMaker::Loop()
 		leadjet_NsubJettiness_vars.clear();
 		leadjet_ECFs.clear();
 		leadjet_ktscale.clear();
+		leadjet_lundPlane_x_lnDeltaInv.clear();
+		leadjet_lundPlane_y_lnKt.clear();
 		if(leadjet_clusters.size() > 0){
 		  leadjet_NsubJettiness_vars = Jet_nSubjettiness(leadjet_clusters);
 		  leadjet_ECFs = Jet_energyCorrelator(leadjet_clusters);
 		  leadjet_ktscale = Jet_KTsplittingScale(leadjet_clusters);
 		  leadjet_qw = Jet_qw(leadjet_clusters);
+
+		  std::pair<std::vector<double>, std::vector<double>> leadjet_lundplane = LundJetPlane(leadjet_clusters);
+		  leadjet_lundPlane_x_lnDeltaInv = leadjet_lundplane.first;
+		  leadjet_lundPlane_y_lnKt = leadjet_lundplane.second;
 		}
 
 		//Jet substrucutre variables for subleading jet
@@ -187,11 +193,18 @@ void MicroNTupleMaker::Loop()
 		subleadjet_NsubJettiness_vars.clear();
 		subleadjet_ECFs.clear();
 		subleadjet_ktscale.clear();
+		subleadjet_lundPlane_x_lnDeltaInv.clear();
+		subleadjet_lundPlane_y_lnKt.clear();
 		if(subleadjet_clusters.size() > 0){
 		  subleadjet_NsubJettiness_vars = Jet_nSubjettiness(subleadjet_clusters);
 		  subleadjet_ECFs = Jet_energyCorrelator(subleadjet_clusters);
 		  subleadjet_ktscale = Jet_KTsplittingScale(subleadjet_clusters);
 		  subleadjet_qw = Jet_qw(subleadjet_clusters);
+
+		  std::pair<std::vector<double>, std::vector<double>> subleadjet_lundplane = LundJetPlane(subleadjet_clusters);
+		  subleadjet_lundPlane_x_lnDeltaInv = subleadjet_lundplane.first;
+		  subleadjet_lundPlane_y_lnKt = subleadjet_lundplane.second;
+
 		}
 		// save output tree
 		//cout << "Filling" << endl;

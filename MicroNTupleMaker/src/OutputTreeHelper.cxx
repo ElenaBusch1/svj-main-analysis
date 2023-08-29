@@ -18,8 +18,8 @@ void MicroNTupleMaker::DeclareOutputTrees(){
 		// -- Jet Substructure calculations -- //
 		"jet1_tau1", "jet1_tau2", "jet1_tau3", "jet1_tau21", "jet1_tau32", 
 		"jet2_tau1", "jet2_tau2", "jet2_tau3", "jet2_tau21", "jet2_tau32", 
-		"jet1_ECF_C2", "jet1_ECF_D2", 
-		"jet2_ECF_C2", "jet2_ECF_D2", 
+		"jet1_ECF1", "jet1_ECF2", "jet1_ECF3", "jet1_ECF_C2", "jet1_ECF_D2", 
+		"jet2_ECF1", "jet2_ECF2", "jet2_ECF3", "jet2_ECF_C2", "jet2_ECF_D2", 
 		"jet1_ktsplit12", "jet1_ktsplit23", "jet1_qw",
 		"jet2_ktsplit12", "jet2_ktsplit23", "jet2_qw",
 
@@ -124,9 +124,15 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
 	tree_output_vars["jet1_tau32"] = -999;
 	}
 	if(leadjet_ECFs.size() > 0){
-	  tree_output_vars["jet1_ECF_C2"] = leadjet_ECFs.at(0);
-	  tree_output_vars["jet1_ECF_D2"] = leadjet_ECFs.at(1);
+	  tree_output_vars["jet1_ECF1"] = leadjet_ECFs.at(0);
+	  tree_output_vars["jet1_ECF2"] = leadjet_ECFs.at(1);
+	  tree_output_vars["jet1_ECF3"] = leadjet_ECFs.at(2);
+	  tree_output_vars["jet1_ECF_C2"] = leadjet_ECFs.at(3);
+	  tree_output_vars["jet1_ECF_D2"] = leadjet_ECFs.at(4);
 	}else{
+	  tree_output_vars["jet1_ECF1"] = -999;
+	  tree_output_vars["jet1_ECF2"] = -999;
+	  tree_output_vars["jet1_ECF3"] = -999;
 	  tree_output_vars["jet1_ECF_C2"] = -999;
 	  tree_output_vars["jet1_ECF_D2"] =-999;
 	}
@@ -161,9 +167,15 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
 		  tree_output_vars["jet2_tau32"] = -999;
 		}
 		if(subleadjet_ECFs.size() > 0){
-		  tree_output_vars["jet2_ECF_C2"] = subleadjet_ECFs.at(0);
-		  tree_output_vars["jet2_ECF_D2"] = subleadjet_ECFs.at(1);
+		  tree_output_vars["jet2_ECF1"] = subleadjet_ECFs.at(0);
+		  tree_output_vars["jet2_ECF2"] = subleadjet_ECFs.at(1);
+		  tree_output_vars["jet2_ECF3"] = subleadjet_ECFs.at(2);
+		  tree_output_vars["jet2_ECF_C2"] = subleadjet_ECFs.at(3);
+		  tree_output_vars["jet2_ECF_D2"] = subleadjet_ECFs.at(4);
 		}else{
+		  tree_output_vars["jet2_ECF1"] = -999;
+		  tree_output_vars["jet2_ECF2"] = -999;
+		  tree_output_vars["jet2_ECF3"] = -999;
 		  tree_output_vars["jet2_ECF_C2"] = -999;
 		  tree_output_vars["jet2_ECF_D2"] =-999;
 		}
@@ -190,6 +202,9 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
 	  tree_output_vars["jet2_tau3"] = -999;
 	  tree_output_vars["jet2_tau21"] = -999;
 	  tree_output_vars["jet2_tau32"] = -999;
+	  tree_output_vars["jet2_ECF1"] = -999;
+	  tree_output_vars["jet2_ECF2"] = -999;
+	  tree_output_vars["jet2_ECF3"] = -999;
 	  tree_output_vars["jet2_ECF_C2"] = -999;
 	  tree_output_vars["jet2_ECF_D2"] = -999;
 	  tree_output_vars["jet2_ktsplit12"] = -999;

@@ -65,10 +65,14 @@ public :
    std::vector<float> leadjet_ECFs;
    std::vector<float> leadjet_ktscale;
    float leadjet_qw;
+   std::vector<double> leadjet_lundPlane_x_lnDeltaInv;
+   std::vector<double> leadjet_lundPlane_y_lnKt;
    std::vector<float> subleadjet_NsubJettiness_vars;
    std::vector<float> subleadjet_ECFs;
    std::vector<float> subleadjet_ktscale;
    float subleadjet_qw;
+   std::vector<double> subleadjet_lundPlane_x_lnDeltaInv;
+   std::vector<double> subleadjet_lundPlane_y_lnKt;
 
    //Weight histogram
    TH1F *MetaData_EventCount;
@@ -188,6 +192,7 @@ public :
    std::vector<float> Jet_energyCorrelator(std::vector<fastjet::PseudoJet> clusters);
    std::vector<float> Jet_KTsplittingScale(std::vector<fastjet::PseudoJet> clusters);
    float Jet_qw(std::vector<fastjet::PseudoJet> clusters);
+   float LundJetPlane(std::vector<fastjet::PseudoJet> clusters);
 
    // OutputTreeHelper
    virtual void		DeclareOutputTrees();
