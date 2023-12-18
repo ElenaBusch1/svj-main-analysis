@@ -289,7 +289,7 @@ c.algorithm("SVJAlgorithm",    		 {
     "m_eventDetailStr"          	: "eventCleaning",
     "m_jetDetailStr"            	: "kinematic allTrack allTrackPVSel energy",
     "m_fatJetDetailStr"	        	: fatJetDetailStr,
-    "m_metDetailStr"            	: "metClus",
+    "m_metDetailStr"            	: "metClus sigClus metTrk sigTrk",
     "m_jetDetailStrSyst"        	: "kinematic",
     "m_trigDetailStr"           	: "basic passTriggers",
     #----------------------- Other ----------------------------#
