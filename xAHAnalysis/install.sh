@@ -1,6 +1,6 @@
 mkdir build
 cd src
-asetup AnalysisBase,22.2.110,here
+asetup AnalysisBase,24.2.25,here
 cd ../build
 cmake ../src
 make
