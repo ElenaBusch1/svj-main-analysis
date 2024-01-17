@@ -98,15 +98,23 @@ Note that `grid_run.sh` executes a prun command, which depends on the maps `file
 ## Weight calculation
 ### Setup
 1. Use rucio to download samples to the eos space
-2. Hadd individual input files into mc groups using the script `hadd_input`. Edit the scrip to the correct version number first. This is important to have the correct totalWeight for each DSID+mcCampaign in the metaData histogram, which is used in the weight calculation.
-3. Navigate to the condor/ area. Open the script `make_file_lists.sh`. Edit the eosPath variable to point to the new files, and make sure the user handle, in both the eosPath and the find commands, is correct for your files. Edit the name of the text files that are created to reflect your version number.
-4. Source `make_file_lists`. This creates two lists; one containing files less than 900 MB, which will be processed on condor (max output file transfer size for condor is 1GB). The 2nd should contain just a few files which are larger than 900MB; for now the best option is to process these files locally. Instructions for both are provided.
+2. Hadd individual input files into mc groups using the script `condor/hadd_input`. Copy this script to the eos space with the new files. Edit the script to the correct version number. This step creates the correct totalWeight for each DSID+mcCampaign in the metaData histogram, which is used in the weight calculation.
+3. Delete the `_output.root` folders, or create a sub-directory `input_files` and move them there.
+4. Navigate to the condor/ area of this repository. Open the script `make_file_lists.sh`:
+  1. Edit the eosPath variable to point to the new file
+  2. Make sure the user handle, in both the eosPath and the find commands, is correct for your files
+  3. Edit the name of the .txt files that are created to reflect your version number.
+5. Source `make_file_lists`. This creates two lists; one containing files less than 900 MB, which will be processed on condor (max output file transfer size for condor is 1GB). The 2nd should contain just a few files which are larger than 900MB; for now the best option is to process these files locally. Instructions for both are provided.
 
 ### Condor processing
 1. In the condor/ area, make a new directory corresponding to the version number, ie "`mkdir v9.1`. This will be your working directory
-2. In submitCondor.py, edit line 6 to point to the eos area where you downloaded the files. Edit the for loop in line 13 to the name of the text file containing the small condor files for processing (eg `[vXX_files.txt]`. Edit line 43 `initialdir =` to the new initial directory you created in the previous step.
-3. Ensure all the filepaths in the submitCondor.py file make sense for your work area (hardcoded to ebusch)
+2. In submitCondor.py:
+  1. Edit line 6 to point to the eos area where you downloaded the files
+  2. Edit the for loop in line 13 to the name of the text file containing the small condor files for processing (eg `[vXX_condor_files.txt]`.
+  3. Edit line 43 `initialdir =` to the new initial directory you created in the previous step.
+3. Ensure the filepaths (initialdir / workdir) in the submitCondor.py file make sense for your work area (hardcoded to ebusch)
 4. `python submitCondor.py` when you are ready to run
+
 TODO: file to check output quality
 
 ### Local processing
