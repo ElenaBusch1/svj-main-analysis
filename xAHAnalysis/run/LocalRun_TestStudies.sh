@@ -8,8 +8,8 @@ parentsubmitdir="/afs/cern.ch/work/e/ebusch/public/SVJ/ana-exot-2021-19/xAHAnaly
 ## Signal
 #infile="/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/DAODs/mc20_13TeV.515499.MGPy8EG_SVJSChan2j_2000_2.deriv.DAOD_PHYS.e8461_s3995_r13167_p5440/DAOD_PHYS.31295849._000001.pool.root.1"
 #infile="/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/DAODs/mc20_13TeV.515501.MGPy8EG_SVJSChan2j_2000_6.deriv.DAOD_PHYS.e8461_s3995_r13167_p5440/DAOD_PHYS.31295968._000001.pool.root.1"
-#infile="/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/DAODs/mc20_13TeV.515515.MGPy8EG_SVJSChan2j_4000_2.deriv.DAOD_PHYS.e8461_s3995_r13167_p5996/DAOD_PHYS.36315387._000001.pool.root.1"
-#configFile=../src/SVJAlgo/data/config_SVJAlgo_MC.py
+infile="/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/DAODs/mc20_13TeV.515518.MGPy8EG_SVJSChan2j_4000_8.deriv.DAOD_PHYS.e8461_s3995_r13167_p5855/DAOD_PHYS.36770167._000002.pool.root.1"
+configFile=../src/SVJAlgo/data/config_SVJAlgo_MC.py
 
 ## Emerging jets
 #infile="/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/DAODs/mc21_13p6TeV.801925.Py8EG_Zprime2EJs_Ld1p6_rho3p2_pi0p8_Zp600_l1.deriv.DAOD_PHYS.e8453_s3873_r13829_p5440/DAOD_PHYS.31233085._000001.pool.root.1"
@@ -18,8 +18,8 @@ parentsubmitdir="/afs/cern.ch/work/e/ebusch/public/SVJ/ana-exot-2021-19/xAHAnaly
 ## Multijet
 #infile="/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/DAODs/mc20_13TeV.364704.Pythia8EvtGen_A14NNPDF23LO_jetjet_JZ4WithSW.deriv.DAOD_PHYS.e7142_s3681_r13145_p5440/DAOD_PHYS.31204919._000037.pool.root.1"
 #infile="/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/DAODs/mc20_13TeV.364704.Pythia8EvtGen_A14NNPDF23LO_jetjet_JZ4WithSW.deriv.DAOD_PHYS.e7142_s3681_r13144_p5631/DAOD_PHYS.33122755._000093.pool.root.1"
-infile="/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/DAODs/mc20_13TeV.364706.Pythia8EvtGen_A14NNPDF23LO_jetjet_JZ6WithSW.deriv.DAOD_PHYS.e7142_s3681_r13145_p5855/DAOD_PHYS.34864318._000065.pool.root.1"
-configFile=../src/SVJAlgo/data/config_SVJAlgo_MC.py
+#infile="/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/DAODs/mc20_13TeV.364706.Pythia8EvtGen_A14NNPDF23LO_jetjet_JZ6WithSW.deriv.DAOD_PHYS.e7142_s3681_r13145_p5855/DAOD_PHYS.34864318._000065.pool.root.1"
+#configFile=../src/SVJAlgo/data/config_SVJAlgo_MC.py
 
 ## Z+jets
 #infile="/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/DAODs/mc20_13TeV.700325.Sh_2211_Zmumu_maxHTpTV2_CVetoBVeto.deriv.DAOD_PHYS.e8351_s3681_r13144_p5440/DAOD_PHYS.31209885._000061.pool.root.1"
@@ -35,8 +35,8 @@ configFile=../src/SVJAlgo/data/config_SVJAlgo_MC.py
 #infile="/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/DAODs/mc20_13TeV.364704.Pythia8EvtGen_A14NNPDF23LO_jetjet_JZ4WithSW.deriv.DAOD_JETM2.e7142_s3681_r13145_p5548/DAOD_JETM2.32404148._000230.pool.root.1"
 #configFile=../src/SVJAlgo/data/config_SVJAlgo_MC.py
 
-nevents=1000
-submitdir=QCD_to_TTREE_${nevents}
+nevents=-1
+submitdir=sig515518_2_to_TTREE_${nevents}
 
 echo "xAH_run.py --files ${infile} --nevents $nevents --config $configFile --extraOptions="" --submitDir ${parentsubmitdir}/$submitdir --log-level $loglevel $extra --force direct "
 xAH_run.py --files ${infile} --nevents $nevents --config $configFile --extraOptions="" --submitDir ${parentsubmitdir}/$submitdir --log-level $loglevel $extra --force direct 

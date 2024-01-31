@@ -3,14 +3,14 @@
 // -------------------------------------------------------------------------------------------------
 void myPlotter(){
 
-	string path = "/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v12/v12.2/user.ebusch.";
+	string path = "/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v12/v12.3/user.ebusch.";
 	//string path = "/eos/user/e/ebusch/SVJ/v7.1_micro/user.kipark.";
 	
 	//vector<string> filetags = {"METbkg", "515495", "515498", "515503", "515506", "515515", "515518"}; // pairs
 	//vector<string> filetags = {"METBkg", "515487", "515499", "515507", "515515", "515519", "515523"}; // masses
 	//vector<string> filetags = { "dataAll", "data15", "data16", "data17", "data18" };//, "QCDskim", "Znunu", "Wjets", "topPhys", "diboson"};
 	//vector<string> filetags = { "data16", "QCDskim", "Znunu", "Wjets", "topPhys"};
-	vector<string> filetags = { "dataAllv9", "515503", "515503v9", "515506","515506v9"}; // rinv
+	vector<string> filetags = { "bkgAll", "515495", "515498", "515515", "515518"}; // rinv
 
 	// - cuts
 	//map<string, TCut> cuts;	
@@ -49,7 +49,7 @@ void myPlotter(){
         plotter.plot_log = true;
         plotter.plot_log_ratio = false;
 	plotter.plot_error = false;
-        plotter.output_file_tag ="newSig";
+        plotter.output_file_tag ="v12p3";
 	plotter.SetTreeName( "PostSel" );
         plotter.use_weight = false;
 	plotter.stamp_counts = false;
@@ -92,11 +92,11 @@ void myPlotter(){
 	//plotter.SetOverlayedPlots( {P_jet1_m, P_jet2_m, P_jet_svj_m, P_jet_asvj_m}, OP_jet_m );
 	//plotter.PlotOverlay("");
 
-	plotter.SetPlots ( plot_all );
+	//plotter.SetPlots ( plot_all );
 	//plotter.SetPlots ( {P_dphi_min, P_met_met, P_met_phi, P_jet1_pt, P_jet1_phi, P_jet2_phi});//, P_jet1_pt, P_jet1_phi, P_jet2_phi, P_met_phi} );
 	//plotter.SaveOutputFile("test");
         //plotter.SetPlots ( { P_jet1_DL1dv01, P_jet2_DL1dv01, P_jet1_GN1, P_jet2_GN1} );
-	//plotter.SetPlots( {P_met_met});
+	plotter.SetPlots( {P_jet1_pt});
 	//plotter.SetPlots ( {P_met_phi, P_jet1_phi, P_jet2_phi} );
         plotter.Plot("");
 

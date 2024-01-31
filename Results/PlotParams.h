@@ -26,7 +26,7 @@ PlotParams P_n_jets			= {"n_jets", "Number of R=0.4 Jets", "N_{jets}", 20, 0, 20
 PlotParams P_n_fatjets			= {"n_fatjets", "Number of R=1.0 Jets", "N_{fatjets}", 12, 0, 12};
 PlotParams P_runNumber			= {"runNumber", "Run Number", "run", 50,276262,364292};
 
-PlotParams P_jet1_pt			= {"jet1_pt", "Leading R=0.4 Jet p_{T}", "p_{T} [GeV]", 50, 0, 3000};
+PlotParams P_jet1_pt			= {"jet1_pt", "Leading R=0.4 Jet p_{T}", "p_{T} [GeV]", 50, 0, 5000};
 PlotParams P_jet1_eta			= {"jet1_eta", "Leading R=0.4 Jet Eta", "#eta", 50, -2.1, 2.1};
 PlotParams P_jet1_phi			= {"jet1_phi", "Leading R=0.4 Jet Phi", "#phi", 50, -3.14, 3.14};
 PlotParams P_jet1_E			= {"jet1_E", "Leading R=0.4 Jet E", "Energy [GeV]", 50, 0, 3000};
