@@ -43,10 +43,10 @@ public :
    vector<float>   *jet1_GhostTrack_d0;
    vector<float>   *jet1_GhostTrack_z0;
    vector<float>   *jet1_GhostTrack_qOverP;
-   string          *year;
    Int_t           my_year;
    Double_t        runNumber;
    Double_t        eventNumber;
+   Double_t        mcChannelNumber;
    Double_t        mcEventWeight;
    Double_t        weight;
    Double_t        my_weight = 1;
@@ -93,10 +93,10 @@ public :
    TBranch        *b_jet1_GhostTrack_d0;   //!
    TBranch        *b_jet1_GhostTrack_z0;   //!
    TBranch        *b_jet1_GhostTrack_qOverP;   //!
-   TBranch        *b_year;   //!
    TBranch        *b_runNumber;   //!
    TBranch        *b_eventNumber;   //!
    TBranch        *b_mcEventWeight;   //!
+   TBranch        *b_mcChannelNumber;   //!
    TBranch        *b_weight;   //!
    TBranch        *b_sumw;   //!
    TBranch        *b_n_jets;   //!
@@ -222,7 +222,6 @@ void fileSkimmer::Init(TTree *tree)
    jet1_GhostTrack_d0 = 0;
    jet1_GhostTrack_z0 = 0;
    jet1_GhostTrack_qOverP = 0;
-   year = 0;
    // Set branch addresses and branch pointers
    if (!tree) return;
    fChain = tree;
@@ -243,10 +242,10 @@ void fileSkimmer::Init(TTree *tree)
    fChain->SetBranchAddress("jet1_GhostTrack_d0", &jet1_GhostTrack_d0, &b_jet1_GhostTrack_d0);
    fChain->SetBranchAddress("jet1_GhostTrack_z0", &jet1_GhostTrack_z0, &b_jet1_GhostTrack_z0);
    fChain->SetBranchAddress("jet1_GhostTrack_qOverP", &jet1_GhostTrack_qOverP, &b_jet1_GhostTrack_qOverP);
-   fChain->SetBranchAddress("year", &year, &b_year);
    fChain->SetBranchAddress("runNumber", &runNumber, &b_runNumber);
    fChain->SetBranchAddress("eventNumber", &eventNumber, &b_eventNumber);
    fChain->SetBranchAddress("mcEventWeight", &mcEventWeight, &b_mcEventWeight);
+   fChain->SetBranchAddress("mcChannelNumber", &mcChannelNumber, &b_mcChannelNumber);
    fChain->SetBranchAddress("weight", &weight, &b_weight);
    fChain->SetBranchAddress("sumw", &sumw, &b_sumw);
    fChain->SetBranchAddress("n_jets", &n_jets, &b_n_jets);
@@ -314,10 +313,10 @@ void fileSkimmer::declareNewTree(TString fileName)
    myTree->Branch("jet1_GhostTrack_d0",	 	&jet1_GhostTrack_d0);
    myTree->Branch("jet1_GhostTrack_z0", 	&jet1_GhostTrack_z0);
    myTree->Branch("jet1_GhostTrack_qOverP", 	&jet1_GhostTrack_qOverP);
-   myTree->Branch("year", 			&my_year);
    myTree->Branch("runNumber", 			&runNumber);
    myTree->Branch("eventNumber",		&eventNumber);
    myTree->Branch("mcEventWeight", 		&mcEventWeight);
+   myTree->Branch("mcChannelNumber", 		&mcChannelNumber);
    myTree->Branch("weight",			&my_weight);
    myTree->Branch("sumw",			&my_sumw);
    myTree->Branch("n_jets", 			&n_jets);

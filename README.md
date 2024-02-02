@@ -107,17 +107,19 @@ Note that `grid_run.sh` executes a prun command, which depends on the maps `file
 5. Source `make_file_lists`. This creates two lists; one containing files less than 900 MB, which will be processed on condor (max output file transfer size for condor is 1GB). The 2nd should contain just a few files which are larger than 900MB; for now the best option is to process these files locally. Instructions for both are provided.
 
 ### Condor processing
+Make sure to connect to EL9 resources - your condor jobs won't run otherwise!
 1. In the condor/ area, make a new directory corresponding to the version number, ie "`mkdir v9.1`. This will be your working directory
 2. In submitCondor.py:
   1. Edit line 6 to point to the eos area where you downloaded the files
   2. Edit the for loop in line 13 to the name of the text file containing the small condor files for processing (eg `[vXX_condor_files.txt]`.
   3. Edit line 43 `initialdir =` to the new initial directory you created in the previous step.
 3. Ensure the filepaths (initialdir / workdir) in the submitCondor.py file make sense for your work area (hardcoded to ebusch)
-4. `python submitCondor.py` when you are ready to run
+4. `python3 submitCondor.py` when you are ready to run
 
 TODO: file to check output quality
 
 ### Local processing
+Local jobs should work on either El9 or Centos7, but likely work better on EL9
 1. copy the following files to the eos location with your files:
 ```
 cp fileSkimmer.C fileSkimmer.h local_run.s vXX_large_files.txt /my/eos/path/

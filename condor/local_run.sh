@@ -4,7 +4,7 @@ while read -r line
 do
   echo "$line"
   echo "Running.."
-  root -l 'fileSkimmer.C('\"$line\"')'
+  root -l -q 'fileSkimmer.C('\"$line\"')'
   echo ""
 done < $1
 

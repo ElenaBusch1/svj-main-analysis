@@ -5,7 +5,7 @@ void MicroNTupleMaker::DeclareOutputTrees(){
 	vector<string> myvars = {
         	 
 		// -- EventLevel -- //
-		"runNumber", "eventNumber","mcEventWeight","weight","sumw",
+		"runNumber", "eventNumber","mcEventWeight","mcChannelNumber","weight","sumw",
 
 		// -- JetLevel -- //
 		"n_jets",
@@ -25,24 +25,16 @@ void MicroNTupleMaker::DeclareOutputTrees(){
 		"deltaY_12"
         };
 
-	vector<string> myvars_string = {
-		"year"
-	};
-	
 	vector<string> myvars_vector = {
 		"jet0_GhostTrack_pt", "jet0_GhostTrack_eta", "jet0_GhostTrack_phi", "jet0_GhostTrack_e", "jet0_GhostTrack_d0", "jet0_GhostTrack_z0", "jet0_GhostTrack_qOverP",
 		"jet1_GhostTrack_pt", "jet1_GhostTrack_eta", "jet1_GhostTrack_phi", "jet1_GhostTrack_e", "jet1_GhostTrack_d0", "jet1_GhostTrack_z0", "jet1_GhostTrack_qOverP"
 	};
-
 
 	for (auto treename: treenames){
 		tree_output[treename] = new TTree( Form("%s",treename.c_str()), Form("%s",treename.c_str()) );
 		
                 for( auto var: myvars_vector ) 
 			tree_output[treename]->Branch( Form("%s",var.c_str()), &tree_output_vars_vector[var] );
-
-                for( auto var: myvars_string ) 
-			tree_output[treename]->Branch( Form("%s",var.c_str()), &tree_output_vars_string[var] );
 
 		for (auto var: myvars)
 			tree_output[treename]->Branch( Form("%s",var.c_str()), &tree_output_vars[var]);
@@ -55,7 +47,7 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
 
 	if (debug) cout << "MicroNTupleMaker::FillOutputTrees()" << endl;
 
-	tree_output_vars_string["year"] = year_mc;
+	//tree_output_vars_string["year"] = year_mc;
 
 	tree_output_vars_vector["jet0_GhostTrack_pt"] = &jet_GhostTrack_pt->at(0);
 	tree_output_vars_vector["jet0_GhostTrack_eta"] = &jet_GhostTrack_eta->at(0);
@@ -75,6 +67,7 @@ void MicroNTupleMaker::FillOutputTrees(string treename){
 	tree_output_vars["runNumber"] = runNumber;
 	tree_output_vars["eventNumber"] = eventNumber;
 	tree_output_vars["mcEventWeight"] = mcEventWeight;
+	tree_output_vars["mcChannelNumber"] = mcChannelNumber;
 	tree_output_vars["weight"] = mcEventWeight*weight_scale;
 	tree_output_vars["sumw"] = sumw;
 

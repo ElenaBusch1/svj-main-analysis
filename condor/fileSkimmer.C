@@ -51,6 +51,7 @@ void fileSkimmer::Loop()
    if (my_year == 2016) lumi = 36.6467e6; //ref OflLumi-13TeV-011 https://twiki.cern.ch/twiki/bin/viewauth/AtlasProtected/GoodRunListsForAnalysisRun2
    if (my_year == 2017) lumi = 44.6306e6;
    if (my_year == 2018) lumi = 58.7916e6;
+   cout << "Set lumi with year " << my_year << endl;
    for (Long64_t jentry=0; jentry<nentries;jentry+=increment) {
       Long64_t ientry = LoadTree(jentry);
       if (ientry < 0) break;

@@ -42,7 +42,6 @@ public :
    map<string,vector<float>*> tree_output_vars_vector;
 
    //file variable
-   string year_mc;
    Int_t dsid_int = 0;
 
    // svj & asvj variables

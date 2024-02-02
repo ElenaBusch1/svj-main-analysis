@@ -145,7 +145,6 @@ void MicroNTupleMaker(string infiletag = "", bool local = false, string infilepa
 	class MicroNTupleMaker myMaker(fChain);
 	// find DSID and set weight
 	myMaker.SetWeight();
-        myMaker.year_mc = mc;
         myMaker.sumw = sumWInput;
 	// Fill and loop
 	myMaker.DeclareHistograms(metadata, cutflow, cutflow_weighted);

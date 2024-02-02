@@ -17,10 +17,10 @@ void MicroNTupleMaker::DeclareHistograms(TH1F* m, TH1F* c, TH1F* cw){
     cutflow_weighted->GetXaxis()->SetBinLabel(i,cutflow_weighted_t->GetXaxis()->GetBinLabel(i));
     if (i == cutflow_t->GetNbinsX()) break; // because cutflow length is shorter for MC than data
   }
-  cout << year_mc << endl;
+  cout << "runNumber: " << runNumber << endl;
   int bin_i;
-  if (year_mc == "data") bin_i = 24;
-  else bin_i = 17;
+  if (runNumber == 284500 || runNumber == 300000 || runNumber == 310000) bin_i = 17;
+  else bin_i = 24;
   cutflow->GetXaxis()->SetBinLabel(bin_i,"met > 200");
   cutflow_weighted->GetXaxis()->SetBinLabel(bin_i,"met > 200");
 

@@ -31,6 +31,8 @@ void MicroNTupleMaker::Loop()
 	int finalEntries = 0;
 	int processedEntries = 0;
 	Long64_t nbytes = 0, nb = 0;
+        if (dsid_int < 100000) cout << "data file; will fix mcEventWeight and mcChannelNumber to 1.0" << endl;
+
 	for (Long64_t jentry=0; jentry<nentries;jentry++) {
 		Long64_t ientry = LoadTree(jentry);
 		if (ientry < 0) break;
@@ -42,18 +44,21 @@ void MicroNTupleMaker::Loop()
 		
                 // check DSID
                 if (dsid_int != mcChannelNumber) cout << "ERROR: Entry 0 DSID " << dsid_int << " does not match event " << mcEventNumber << "(" << jentry << ") DSID" << mcChannelNumber << endl;
-		if (year_mc == "data") mcEventWeight = 1.0;
+		if (dsid_int < 100000){
+                   mcEventWeight = 1.0;
+                   mcChannelNumber = 1.0;
+                }
 		// create relevant 4 vectors
 		TLorentzVector v1, v2, met_v;
 
 		// MET preselection
 		if(metFinalClus < 200) continue;
                 int val;
-                if (year_mc == "data") val = 24;
+                if (dsid_int < 100000) val = 24;
                 else val = 17;
 		cutflow->Fill(val);
 		cutflow_weighted->Fill(val,mcEventWeight);
-                
+ 
 		v1.SetPtEtaPhiE(jet_pt->at(0), jet_eta->at(0), jet_phi->at(0), jet_E->at(0));
 		v2.SetPtEtaPhiE(jet_pt->at(1), jet_eta->at(1), jet_phi->at(1), jet_E->at(1));
 		//v_svj.SetPtEtaPhiE(jet_pt->at(n_svj), jet_eta->at(n_svj), jet_phi->at(n_svj), jet_E->at(n_svj));
@@ -66,6 +71,11 @@ void MicroNTupleMaker::Loop()
 		if (mT_jj<1200) continue;
 		cutflow->Fill(val+1);
 		cutflow_weighted->Fill(val+1,mcEventWeight);
+
+                // Reject bad weights
+                //cout << "year_mc: " << year_mc << endl;
+                //cout << "mcEventweight: " << mcEventWeight << endl;
+                //if (mcEventWeight == 1.0 and year_mc != "data") { cout << "rejecting bad weight" << endl; continue; }
 
 		// y* preselection
 		deltaY_12 = GetDeltaY(v1,v2);
