@@ -30,6 +30,7 @@ public :
 	vector<TCut> cuts_compare = {""};
 	map<string,TCut> selective_cuts;
 	bool alternate_divisors = false;
+        bool no_sig_ratio = false;
 
 	// Plot Options
 	vector<Color_t> colors    = { kBlack, kMagenta-7, kRed, kOrange, kGreen+2, kAzure+7, kBlue+2 };
@@ -504,6 +505,7 @@ public :
 		int j = -1;
 		for( auto hist_tag: hist_tags ){
 			j++; 
+                        if (j > 1 && no_sig_ratio) continue;
 
 			if( alternate_divisors && j%2 != 1 ) continue;
 			i++;
@@ -519,6 +521,7 @@ public :
 			//h->SetMinimum( 0.8 );
 			h->SetMaximum( 2.0 );
 			if( plot_log_ratio ) h->SetMaximum( 10. );			
+                        if( no_sig_ratio) h->SetMaximum(1.5);
 
 			//if( i == 0 ){
 			//for( int ib = 0; ib < h->GetNbinsX()+1; ib++ ) h->SetBinError(ib, 0.0);

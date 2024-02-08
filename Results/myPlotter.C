@@ -3,14 +3,14 @@
 // -------------------------------------------------------------------------------------------------
 void myPlotter(){
 
-	string path = "/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v12/v12.3/user.ebusch.";
+	string path = "/eos/atlas/atlascerngroupdisk/phys-exotics/jdm/svjets-schannel/v12/v12.5/user.ebusch.";
 	//string path = "/eos/user/e/ebusch/SVJ/v7.1_micro/user.kipark.";
 	
-	//vector<string> filetags = {"METbkg", "515495", "515498", "515503", "515506", "515515", "515518"}; // pairs
+	vector<string> filetags = {"dataALL", "bkgALL", "515499", "515502", /*"515507", "515510",*/ "515519", "515522"}; //pairs
 	//vector<string> filetags = {"METBkg", "515487", "515499", "515507", "515515", "515519", "515523"}; // masses
 	//vector<string> filetags = { "dataAll", "data15", "data16", "data17", "data18" };//, "QCDskim", "Znunu", "Wjets", "topPhys", "diboson"};
 	//vector<string> filetags = { "data16", "QCDskim", "Znunu", "Wjets", "topPhys"};
-	vector<string> filetags = { "bkgAll", "515495", "515498", "515515", "515518"}; // rinv
+	//vector<string> filetags = { "bkgAll", "515495", "515498", "515515", "515518"}; // rinv
 
 	// - cuts
 	//map<string, TCut> cuts;	
@@ -27,9 +27,9 @@ void myPlotter(){
 					P_met_met, P_met_phi,
 					P_mT_jj, P_jet2_Width, P_jet1_Width,
 					//P_mT_jj_neg, /*P_met_jj_neg, P_dphi_MET_j1j2,*/
-					P_pt_balance_12, P_maxphi_minphi, P_rT,
-					P_n_jets, P_hT, P_deltaY_12, P_runNumber,
-					P_dphi_12, P_dphi_min, P_dR_12, P_deta_12
+					//P_pt_balance_12, P_maxphi_minphi, P_rT,
+					P_n_jets, P_deltaY_12 //P_runNumber,
+					//P_dphi_12, P_dphi_min, P_dR_12, P_deta_12
 					};
 
 	vector<PlotParams> plot_trks= {	P_jet2_SumPtTrkPt500PV, P_jet2_NumTrkPt500PV, 
@@ -49,9 +49,10 @@ void myPlotter(){
         plotter.plot_log = true;
         plotter.plot_log_ratio = false;
 	plotter.plot_error = false;
-        plotter.output_file_tag ="v12p3";
+        plotter.output_file_tag ="v12p5";
+        plotter.no_sig_ratio = true;
 	plotter.SetTreeName( "PostSel" );
-        plotter.use_weight = false;
+        plotter.use_weight = true;
 	plotter.stamp_counts = false;
 	plotter.stamp_integral = false;
 	plotter.stamp_cuts = false;
@@ -61,8 +62,8 @@ void myPlotter(){
 	plotter.reverse_cdf_plots = {"fabs(jet1_eta)", "fabs(jet2_eta)", "dphi_min", "deltaY_12"};
 	plotter.use_normalized_cdf = true;
 	//plotter.SetLegendManual( 0.5, 0.5, 0.9, 0.9 );
-	plotter.colors = {kBlack, /*kRed, kGray+2,*/ kBlue+1, kAzure+7,kGreen+3, kSpring, kRed+1, kOrange-3, kPink+10, kPink+1, kViolet-1, kViolet-4 }; //pairs
-        //plotter.colors = { kBlack, kRed, kOrange-3, kYellow+1, kSpring-1, kAzure, kBlue+2, kViolet}; //rainbow
+	plotter.colors = {kBlack, kGray+2, kBlue+1, kAzure+7,kGreen+3, kSpring, kRed+1, kOrange-3, kPink+10, kPink+1, kViolet-1, kViolet-4 }; //pairs
+        //plotter.colors = { kRed, kBlack, kOrange-3, kYellow+1, kSpring-1, kAzure, kBlue+2, kViolet}; //rainbow
         //plotter.colors = { kRed, kRed+2, kOrange-3, kYellow+1, kSpring, kGreen+3, kCyan+1, kAzure, kBlue+2, kViolet, kMagenta-9, kBlack}; //10 gradient + black
 
         //***************** Plot Variable options *******************//
@@ -92,13 +93,13 @@ void myPlotter(){
 	//plotter.SetOverlayedPlots( {P_jet1_m, P_jet2_m, P_jet_svj_m, P_jet_asvj_m}, OP_jet_m );
 	//plotter.PlotOverlay("");
 
-	//plotter.SetPlots ( plot_all );
+	plotter.SetPlots ( plot_all );
 	//plotter.SetPlots ( {P_dphi_min, P_met_met, P_met_phi, P_jet1_pt, P_jet1_phi, P_jet2_phi});//, P_jet1_pt, P_jet1_phi, P_jet2_phi, P_met_phi} );
 	//plotter.SaveOutputFile("test");
         //plotter.SetPlots ( { P_jet1_DL1dv01, P_jet2_DL1dv01, P_jet1_GN1, P_jet2_GN1} );
-	plotter.SetPlots( {P_jet1_pt});
+	//plotter.SetPlots( {P_met_met});
 	//plotter.SetPlots ( {P_met_phi, P_jet1_phi, P_jet2_phi} );
-        plotter.Plot("");
+        plotter.Plot("ratio");
 
         //***************** 2D Plot *******************// 	
 	//plotter.Plot2D(P_jet2_phi, P_jet2_eta);

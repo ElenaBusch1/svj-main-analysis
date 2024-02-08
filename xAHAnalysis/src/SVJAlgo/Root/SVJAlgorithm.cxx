@@ -451,13 +451,15 @@ bool SVJAlgorithm :: executeAnalysis ( const xAOD::EventInfo* eventInfo,
     // tight cleaning
     bool passTight = true;
     if(closestEMtopojet->isAvailable<char>("DFCommonJets_jetClean_TightBad")){
-      if(closestEMtopojet->auxdataConst<char>("DFCommonJets_jetClean_TightBad")<1){
+      std::cout << "Status:" << (int)closestEMtopojet->auxdataConst<char>("DFCommonJets_jetClean_TightBad") << std::endl;
+      if((int)closestEMtopojet->auxdataConst<char>("DFCommonJets_jetClean_TightBad")<1){
 	passTight = false;
       }
     }
     passAll = passTight && passAll;
   }
   if(!passAll){
+    std::cout << "rejecting event for tight selection" << std::endl;
     wk()->skipEvent();  return EL::StatusCode::SUCCESS;
   }
   if(!bothJetsGoodTile){

@@ -10,7 +10,7 @@ eosPath = "root://eosatlas.cern.ch//eos/atlas/atlascerngroupdisk/phys-exotics/jd
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
-    for file_list in ["v12p5_qcd_condor_files.txt"]:
+    for file_list in ["v12p5_condor_files.txt"]:
         with open(file_list, "r") as f:
             files = []
             for line in f:
